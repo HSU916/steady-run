@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="設定半馬或全馬目標，透過配速情境比較，看見前後段速度如何影響完賽時間。">
-<title>穩穩跑｜長跑配速小助手</title>
+<meta name="description" content="自訂三段配速，匯入 TCX 比較實際紀錄。所有解析與儲存都在本機完成。">
+<title>穩穩跑 V2｜配速規劃與 TCX 跑後分析</title>
 <style>
 :root{--bg:#f4f5f0;--card:#fff;--ink:#203b36;--muted:#5b6f69;--line:#dce4de;--teal:#176b55;--lime:#e1edac;--orange:#ad5128;--soft:#eef4ef;--radius:18px}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif;line-height:1.6}button,input,select,textarea{font:inherit}button,a,input,select,textarea{touch-action:manipulation}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #a66513;outline-offset:3px}button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:9px 15px;font-weight:700}button:hover{background:var(--soft)}button.primary{background:var(--teal);color:white;border-color:var(--teal)}button.primary:hover{background:#10533f}button:disabled{cursor:default;opacity:.5}a{color:var(--teal)}.wrap{max-width:1240px;padding:0 32px;margin:auto}.topbar{border-bottom:1px solid var(--line);background:rgba(255,255,255,.75)}.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:74px;gap:12px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:19px}.logo{width:36px;height:36px;border-radius:11px;background:var(--teal);color:var(--lime);display:grid;place-items:center}.topnote{font-size:12px;color:var(--muted)}.hero{display:flex;align-items:center;justify-content:space-between;padding:35px 0 27px;gap:24px}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--teal);margin:0 0 7px}.hero h1{font-size:clamp(26px,3.2vw,38px);letter-spacing:-.04em;line-height:1.25;margin:0 0 10px}.hero p{margin:0;color:var(--muted);font-size:14px}.distance-mark{flex:0 0 150px;border-left:1px solid var(--line);padding-left:25px;font-size:12px;color:var(--muted)}.distance-mark strong{font-size:36px;display:block;color:var(--teal);letter-spacing:-.06em;line-height:1.2}.main-grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}.controls{padding:23px}.section-head{display:flex;align-items:center;gap:9px;margin-bottom:18px}.number{font-size:11px;border-radius:50%;background:var(--soft);width:25px;height:25px;display:grid;place-items:center;color:var(--teal);font-weight:800}h2{font-size:17px;line-height:1.4;margin:0}h3{font-size:15px;margin:0}.label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}select,input[type=number],input[type=text],textarea{background:#fff;border:1px solid #bacbc1;border-radius:9px;color:var(--ink);width:100%;padding:10px 11px;min-height:44px}input[aria-invalid=true]{border:2px solid #b13e24}.field{margin:0 0 17px}.time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.unit-field{position:relative}.unit-field input{padding-right:40px}.unit-field span{position:absolute;right:12px;top:11px;font-size:13px;color:var(--muted)}.help{font-size:12px;color:var(--muted);margin:6px 0 0}.divider{border:0;border-top:1px solid var(--line);margin:23px 0}.presets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}.presets button{font-size:12px;padding:9px 5px}.presets button[aria-pressed=true]{background:var(--soft);border-color:var(--teal);color:var(--teal)}.range-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.range-value{font-size:13px;color:var(--teal);font-weight:800;white-space:nowrap}input[type=range]{width:100%;accent-color:var(--teal);margin:6px 0;min-height:28px}.range-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.scenario-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}.scenario-fields .label{font-size:12px}.error{color:#a3321d;background:#fff0e9;border:1px solid #e3b4a2;border-radius:10px;padding:12px;font-size:13px;margin:0 0 14px}.error:empty{display:none}.right-col{display:grid;gap:18px}.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.stat{padding:19px 20px;min-width:0}.stat.main{background:var(--teal);color:white;border-color:var(--teal)}.stat-label{font-size:12px;color:var(--muted);display:block;margin-bottom:7px}.main .stat-label{color:#d8eade}.stat strong{font-size:clamp(25px,2.7vw,34px);letter-spacing:-.04em;line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}.stat small{display:block;font-size:11px;margin-top:7px;color:var(--muted)}.main small{color:#d8eade}.stat-unit{font-size:12px;font-weight:400;letter-spacing:0}.result-panel{padding:23px 25px}.result-head{display:flex;justify-content:space-between;align-items:start;gap:12px}.tag{background:var(--soft);font-size:11px;padding:4px 9px;border-radius:6px;white-space:nowrap;color:var(--teal)}.result-line{font-size:14px;margin:16px 0 12px;padding:12px 14px;background:var(--soft);border-left:3px solid var(--teal);border-radius:0 8px 8px 0}.result-line.late{background:#fff5ee;border-color:var(--orange);color:#824326}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:15px 0 5px}.legend span{display:flex;align-items:center;gap:6px}.line-key{display:inline-block;width:19px;border-top:3px solid var(--teal)}.line-key.base{border-color:#8b9691;border-top-style:dashed}.chart{display:block;width:100%;height:auto;overflow:visible}.axis-label{font-size:11px;fill:var(--muted)}.caption{font-size:11px;color:var(--muted);margin:0}.table-panel{padding:22px 25px}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;margin-top:13px;font-variant-numeric:tabular-nums}th,td{padding:10px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:11px;font-weight:600}th:first-child,td:first-child{text-align:left}tbody tr:last-child{background:var(--soft);font-weight:800}tbody tr:last-child td{border-bottom:0}.plus{color:var(--orange)}.minus{color:var(--teal)}.table-actions{margin-top:15px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.table-actions p{font-size:11px;color:var(--muted);margin:0}.table-actions button{font-size:12px;padding:6px 11px}.save-panel{margin:22px 0 18px;padding:22px 25px;display:grid;grid-template-columns:1fr 1fr;gap:25px}.save-panel h2{margin-bottom:10px}textarea{resize:vertical;min-height:79px;font-size:13px}.save-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.save-actions button{font-size:12px}.status{font-size:12px;color:var(--muted);min-height:20px;margin:8px 0 0}.notes{font-size:12px;color:var(--muted);border-left:1px solid var(--line);padding-left:25px}.notes p{margin:5px 0 12px}.notes strong{color:var(--ink)}details{border:1px solid var(--line);background:#fff;border-radius:12px;padding:15px 20px;margin-bottom:20px;font-size:13px}summary{cursor:pointer;font-weight:700}details p{color:var(--muted)}.formula{padding:12px 15px;background:var(--soft);border-radius:8px;line-height:1.9}footer{display:flex;justify-content:space-between;gap:15px;font-size:11px;color:var(--muted);padding:0 0 28px} [hidden]{display:none!important}
@@ -13,113 +13,402 @@
 @media(max-width:760px){.chart .axis-label{font-size:22px}}
 @media(max-width:370px){.stat strong{font-size:21px}.stat{padding:14px 8px}.stat-grid{gap:5px}.brand{font-size:17px}}
 @media print{body{background:white}.wrap{max-width:none;padding:0}.topbar,.controls,.save-actions,.table-actions,details,footer{display:none}.hero{padding:10px 0 20px}.main-grid{display:block}.right-col{gap:14px}.panel{break-inside:avoid}.save-panel{margin-top:16px}.notes{font-size:11px}textarea{border:0}.stat.main{background:white;color:var(--ink)}.main .stat-label,.main small{color:var(--muted)}}
+
+.phase-strip{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 22px;font-size:12px;color:var(--muted)}
+.main-grid>*{min-width:0}.time-row,.scenario-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.table-scroll{max-width:100%}
+.right-col{grid-template-columns:minmax(0,1fr)}.right-col>*{min-width:0}.stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.table-swipe{display:none}@media(max-width:760px){.table-swipe{display:block;margin-top:10px}}
+.phase-strip span{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff}.phase-strip .phase-current{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+.pace-inputs{display:grid;gap:14px;margin:15px 0}.pace-entry{min-width:0;border:1px solid var(--line);border-radius:12px;margin:0;padding:10px 13px 14px}.pace-entry legend{font-size:13px;font-weight:700;padding:0 5px}.segment-dot{font-size:10px;border-radius:5px;background:var(--teal);color:#fff;padding:2px 5px;margin-right:6px}.segment-dot.middle{background:#537968}.segment-dot.late{background:#897046}.segment-range{margin:0 0 9px;overflow-wrap:anywhere}
+.field-error{font-size:12px;color:#a3321d;margin:6px 0 0}.field-error:empty{display:none}.rule-note,.precision-note{padding:11px 12px;border-radius:8px;background:var(--soft)}.controls .scenario-fields .field{margin-bottom:2px}.table-scroll:focus-visible{outline:3px solid #a66513;outline-offset:3px}.table-panel tbody tr:last-child{font-weight:600}.table-panel tbody tr:last-child td{border-bottom:0}.chart{margin-bottom:5px}.save-panel .status{font-weight:700;color:var(--teal)}
+@media(max-width:760px){.phase-strip{gap:7px;font-size:11px}.phase-strip span{padding:8px 10px}.result-head{flex-wrap:wrap}.stat strong{font-size:24px}.phase-strip{margin-bottom:16px}}
+@media(max-width:370px){.stat strong{font-size:20px}.stat-unit{font-size:10px}.brand{gap:7px}.brand>span:last-child{font-size:9px!important}}
+@media print{.phase-strip{display:none}}
+
+.phase-strip a{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff;text-decoration:none}.phase-strip .phase-current{background:var(--teal);color:white}.analysis-panel{padding:25px;margin-top:22px;min-width:0}.analysis-panel .help{font-size:12px}.import-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:22px}.import-grid>*{min-width:0}input[type=file]{width:100%;max-width:100%;font-size:13px;border:1px dashed #a6bcb0;border-radius:10px;padding:12px;background:var(--soft)}.record-actions{display:flex;align-items:center;gap:12px;margin-top:10px}.record-actions button{font-size:12px}.record-meta{font-size:12px;padding:12px 14px;background:var(--soft);border-radius:9px;overflow-wrap:anywhere}.start-row{display:grid;grid-template-columns:280px 1fr;gap:25px;align-items:center;margin-top:15px}.analysis-policy{font-size:12px;color:var(--muted)}.analysis-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.analysis-stats>div{padding:16px;background:var(--soft);border-radius:11px;min-width:0}.analysis-stats strong{display:block;font-size:27px;letter-spacing:-.04em;white-space:nowrap;font-variant-numeric:tabular-nums}.analysis-stats small{display:block;font-size:11px;color:var(--muted);margin-top:6px}.analysis-stats .unknown-time{font-size:21px}.quality-note{font-size:12px;color:#755431;padding:12px 14px;background:#fff7ec;border-radius:9px}.analysis-subtitle{margin:25px 0 8px}.analysis-export{margin:22px 0;display:flex;align-items:center;gap:15px;flex-wrap:wrap}.analysis-export button{font-size:13px}.analysis-details{margin:15px 0 0}.drop-key{color:var(--orange)}.analysis-panel .table-scroll{max-width:100%;width:100%}.analysis-panel .table-scroll th,.analysis-panel .table-scroll td{font-size:12px}.analysis-panel .table-scroll tbody tr:last-child{background:transparent;font-weight:400}.analysis-panel .legend{margin-top:20px}.analysis-panel .error{margin-top:13px}
+@media(max-width:760px){.analysis-panel{padding:21px 16px}.import-grid,.start-row{grid-template-columns:minmax(0,1fr);gap:13px}.analysis-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.analysis-stats strong{font-size:25px}.analysis-stats>div{padding:13px}.phase-strip a{padding:8px 10px}.analysis-panel .table-scroll td{max-width:300px}.analysis-policy{padding:10px 12px;background:var(--soft);border-radius:9px}.start-row .field{margin-bottom:0}}
+@media print{.import-grid,.record-actions,.analysis-export,.analysis-details{display:none}.analysis-panel{break-inside:auto}.analysis-panel .table-scroll{overflow:visible}}
+
+.terrain-toggle{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;margin:16px 0;cursor:pointer}.terrain-toggle input{width:18px;height:18px;accent-color:var(--teal);flex-shrink:0}.terrain-panel{margin:16px 0 25px;padding:18px;background:#fcfdfb;border:1px solid var(--line);border-radius:12px;min-width:0}.terrain-panel h3{font-size:17px;margin:0 0 10px}.terrain-panel summary{font-size:13px;cursor:pointer}.terrain-panel .quality-note{margin:12px 0}.terrain-panel[hidden]{display:none}@media(max-width:760px){.terrain-panel{padding:12px}.terrain-toggle{font-size:12px}}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="wrap"><div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 24h8l5-9 4 5h5M8 16l6-6 5 3 5-2M15 17l-5 5"/><circle cx="20" cy="6" r="2" fill="currentColor" stroke="none"/></svg></span>穩穩跑<span style="font-size:11px;font-weight:500;color:var(--muted)">PACE PLANNER</span></div><span class="topnote">跑前想清楚，路上更有數。</span></div></header>
 <main class="wrap">
-<section class="hero"><div><p class="eyebrow">YOUR RUN, YOUR RHYTHM</p><h1>把目標，拆成每一公里。</h1><p>設定目標、試算前後段配速，看看時間差會累積多少。</p></div><div class="distance-mark"><span id="distanceName">半程馬拉松</span><strong id="distanceMark">21.0975</strong>公里的配速練習</div></section>
+<section class="hero"><div><p class="eyebrow">YOUR RUN, YOUR RHYTHM · V2</p><h1>把目標，拆成每一公里。</h1><p>直接安排三段配速，看看你的計畫和目標差多少。</p></div><div class="distance-mark"><span id="distanceName">半程馬拉松</span><strong id="distanceMark">21.0975</strong>公里的配速規劃</div></section>
+<div class="phase-strip" aria-label="開發階段"><a class="phase-current" href="#planForm">01 跑前規劃</a><a href="#afterRun">02 TCX 跑後分析</a></div>
 <div class="main-grid">
 <form class="panel controls" id="planForm" novalidate>
-<div class="section-head"><span class="number">01</span><h2>這次想怎麼跑？</h2></div>
-<div class="field"><label class="label" for="distance">跑步距離</label><select id="distance"><option value="10">10 公里</option><option value="21.0975" selected>半馬 · 21.0975 公里</option><option value="42.195">全馬 · 42.195 公里</option></select></div>
-<div class="field"><span class="label" id="timeLabel">目標完賽時間</span><div class="time-row" role="group" aria-labelledby="timeLabel"><div class="unit-field"><input id="hours" type="number" min="0" max="12" step="1" value="2" aria-label="目標小時" inputmode="numeric"><span>小時</span></div><div class="unit-field"><input id="minutes" type="number" min="0" max="59" step="1" value="0" aria-label="目標分鐘" inputmode="numeric"><span>分鐘</span></div></div><p class="help">時間需大於 0，最多 12 小時 59 分鐘。</p></div>
+<div class="section-head"><span class="number">01</span><h2>設定這次的目標</h2></div>
+<div class="field"><label class="label" for="distancePreset">常見距離</label><select id="distancePreset"><option value="5">5K · 5 公里</option><option value="10">10K · 10 公里</option><option value="21.0975" selected>半馬 · 21.0975 公里</option><option value="42.195">全馬 · 42.195 公里</option><option value="custom">其他自訂</option></select></div>
+<div class="field"><label class="label" for="distance">距離（可直接修改）</label><div class="unit-field"><input id="distance" type="number" min="0.1" max="100" step="0.0001" value="21.0975" inputmode="decimal" aria-describedby="distanceHelp distanceError"><span>km</span></div><p class="help" id="distanceHelp">暫採 0.1–100 km，最多四位小數。</p><p class="field-error" id="distanceError"></p></div>
+<div class="field"><span class="label" id="timeLabel">目標完賽時間</span><div class="time-row" role="group" aria-labelledby="timeLabel"><div class="unit-field"><input id="hours" type="number" min="0" max="12" step="1" value="2" aria-label="目標小時" aria-describedby="targetError" inputmode="numeric"><span>小時</span></div><div class="unit-field"><input id="minutes" type="number" min="0" max="59" step="1" value="0" aria-label="目標分鐘" aria-describedby="targetError" inputmode="numeric"><span>分鐘</span></div></div><p class="field-error" id="targetError"></p></div>
+<p class="help rule-note">改距離會按原比例調整分段，保留配速與目標時間。只改目標時間，也不會改動你的配速。</p>
 <hr class="divider">
-<div class="section-head"><span class="number">02</span><h2>試一個配速情境</h2></div>
-<div class="presets"><button type="button" id="steady" aria-pressed="true">穩定配速</button><button type="button" id="fade" aria-pressed="false">前快後慢</button></div>
-<div class="field"><div class="range-heading"><label class="label" for="earlyOffset">前段與目標配速的差距</label><output class="range-value" id="earlyValue" for="earlyOffset">相同配速</output></div><input id="earlyOffset" type="range" min="-30" max="30" step="1" value="0"><div class="range-ends"><span>每公里快 30 秒</span><span>每公里慢 30 秒</span></div></div>
-<div class="scenario-fields"><div class="field"><label class="label" for="earlyKm">前段到第幾公里？</label><div class="unit-field"><input id="earlyKm" type="number" min="0" max="21.0975" step="any" value="5" inputmode="decimal"><span>km</span></div></div><div class="field"><label class="label" for="fadeKm">後段從幾公里開始？</label><div class="unit-field"><input id="fadeKm" type="number" min="0" max="21.0975" step="any" value="15" inputmode="decimal"><span>km</span></div></div></div>
-<div class="field"><div class="range-heading"><label class="label" for="slowdown">後段配速秒數增加</label><output class="range-value" id="slowValue" for="slowdown">0%</output></div><input id="slowdown" type="range" min="0" max="30" step="1" value="0"><div class="range-ends"><span>0% · 維持配速</span><span>30% · 秒數增加</span></div><p class="help">例如 6:00/km 增加 15% → 6:54/km。<br>中段維持目標配速；後段以目標配速為基準。</p></div>
+<div class="section-head"><span class="number">02</span><h2>安排前、中、後三段</h2></div>
+<div class="scenario-fields"><div class="field"><label class="label" for="earlyKm">前段終點</label><div class="unit-field"><input id="earlyKm" type="number" min="0" step="any" value="5.274375" inputmode="decimal" aria-describedby="segmentsError"><span>km</span></div></div><div class="field"><label class="label" for="fadeKm">後段起點</label><div class="unit-field"><input id="fadeKm" type="number" min="0" step="any" value="15.823125" inputmode="decimal" aria-describedby="segmentsError"><span>km</span></div></div></div><p class="field-error" id="segmentsError"></p>
+<p class="help" id="segmentHint">示範比例：前 25%／中 50%／後 25%，可自行修改。</p>
+<div class="pace-inputs">
+<fieldset class="pace-entry"><legend><span class="segment-dot" aria-hidden="true">前</span>前段配速</legend><p class="help segment-range" id="earlyRange">0–5.274375 km</p><div class="time-row"><div class="unit-field"><input id="earlyMin" type="number" min="0" step="1" value="5" aria-label="前段配速分鐘" aria-describedby="earlyPaceError" inputmode="numeric"><span>分</span></div><div class="unit-field"><input id="earlySec" type="number" min="0" max="59" step="1" value="41" aria-label="前段配速秒數" aria-describedby="earlyPaceError" inputmode="numeric"><span>秒</span></div></div><p class="field-error" id="earlyPaceError"></p></fieldset>
+<fieldset class="pace-entry"><legend><span class="segment-dot middle" aria-hidden="true">中</span>中段配速</legend><p class="help segment-range" id="middleRange">5.274375–15.823125 km</p><div class="time-row"><div class="unit-field"><input id="middleMin" type="number" min="0" step="1" value="5" aria-label="中段配速分鐘" aria-describedby="middlePaceError" inputmode="numeric"><span>分</span></div><div class="unit-field"><input id="middleSec" type="number" min="0" max="59" step="1" value="41" aria-label="中段配速秒數" aria-describedby="middlePaceError" inputmode="numeric"><span>秒</span></div></div><p class="field-error" id="middlePaceError"></p></fieldset>
+<fieldset class="pace-entry"><legend><span class="segment-dot late" aria-hidden="true">後</span>後段配速</legend><p class="help segment-range" id="lateRange">15.823125–21.0975 km</p><div class="time-row"><div class="unit-field"><input id="lateMin" type="number" min="0" step="1" value="5" aria-label="後段配速分鐘" aria-describedby="latePaceError" inputmode="numeric"><span>分</span></div><div class="unit-field"><input id="lateSec" type="number" min="0" max="59" step="1" value="41" aria-label="後段配速秒數" aria-describedby="latePaceError" inputmode="numeric"><span>秒</span></div></div><p class="field-error" id="latePaceError"></p></fieldset>
+</div>
+<p class="help">每段均輸入「分、秒／公里」。目標與計畫可以不同，系統會保留你的安排並顯示差距。</p>
 <p id="formError" class="error" role="alert"></p>
-<button type="button" id="reset" style="width:100%">恢復半馬 2 小時預設</button>
-<p class="help" style="margin-top:11px">調整數值後，右側結果會即時更新。</p>
+<button type="button" id="reset" style="width:100%;margin-top:12px">恢復半馬 2 小時示範</button>
+<p class="help">有效設定即時重算，並自動儲存到此瀏覽器。</p>
 </form>
-<section class="right-col" id="results" aria-label="配速試算結果">
-<div class="stat-grid"><article class="panel stat main"><span class="stat-label">目標平均配速</span><strong id="basePace">5:41</strong><span class="stat-unit"> /km</span><small>依距離與目標時間換算</small></article><article class="panel stat"><span class="stat-label">此情境的完賽時間</span><strong id="finishTime">2:00:00</strong><small id="averagePace">平均 5:41 /km</small></article><article class="panel stat"><span class="stat-label">與目標時間的差距</span><strong id="timeDiff">±0:00</strong><small id="diffLabel">剛好達到目標</small></article></div>
-<article class="panel result-panel"><div class="result-head"><h2>同一個目標，不同的節奏。</h2><span class="tag" id="scenarioTag">穩定配速</span></div><p id="resultSentence" class="result-line" aria-live="polite">全程維持目標配速，試算結果剛好達標。</p><div class="legend"><span><i class="line-key base"></i>目標穩定配速</span><span><i class="line-key"></i>目前設定的情境</span></div><svg id="paceChart" class="chart" viewBox="0 0 680 235" role="img" aria-labelledby="chartTitle chartDesc"><title id="chartTitle">目標配速與情境配速比較</title><desc id="chartDesc">橫軸為公里數，縱軸為每公里配速，秒數越大代表越慢。</desc></svg><p class="caption">縱軸越高代表每公里花費時間越多、速度越慢。圖表為設定情境，並非手錶實測紀錄。</p></article>
-<article class="panel table-panel"><div class="result-head"><h2>分段檢查，把時間差看清楚。</h2><span class="tag">含終點零頭距離</span></div><div class="table-scroll"><table><caption class="help" style="text-align:left;padding-top:6px">每 5 公里與終點的累計時間</caption><thead><tr><th scope="col">檢查點</th><th scope="col">穩定配速累計</th><th scope="col">情境累計</th><th scope="col">時間差</th></tr></thead><tbody id="splitRows"></tbody></table></div><div class="table-actions"><p>畫面配速取整秒顯示；累計時間使用未四捨五入的數值計算。</p><button type="button" id="download">下載配速表 CSV ↓</button></div></article>
+<section class="right-col" id="results" aria-label="三段配速規劃結果">
+<div class="stat-grid"><article class="panel stat main"><span class="stat-label">目標平均配速</span><strong id="basePace">5:41</strong><span class="stat-unit"> /km</span><small>由目標時間與距離換算</small></article><article class="panel stat"><span class="stat-label">三段計畫完成時間</span><strong id="finishTime">1:59:54</strong><small id="averagePace">計畫平均 5:41 /km</small></article><article class="panel stat"><span class="stat-label">計畫與目標的差距</span><strong id="timeDiff">−0:06</strong><small id="diffLabel">比目標時間提早</small></article></div>
+<article class="panel result-panel"><div class="result-head"><h2>三段節奏，由你決定。</h2><span class="tag">跑前計畫</span></div><p id="resultSentence" class="result-line" aria-live="polite"></p><p class="help precision-note" id="precisionNote"></p><div class="legend"><span><i class="line-key base"></i>目標平均配速</span><span><i class="line-key"></i>三段計畫配速</span></div><svg id="paceChart" class="chart" viewBox="0 0 680 235" role="img" aria-labelledby="chartTitle chartDesc"><title id="chartTitle">目標與三段計畫配速比較</title><desc id="chartDesc">橫軸為公里數，縱軸為每公里所需時間。</desc></svg><p class="caption">縱軸越高代表每公里花費時間越多、速度越慢。這是你的配速計畫，並非實測或預測。</p></article>
+<article class="panel table-panel"><div class="result-head"><h2>每一段，要花多少時間？</h2><span class="tag">依輸入的整秒配速計算</span></div><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="三段安排表，可橫向捲動"><table><caption class="help" style="text-align:left;padding-top:6px">三段配速、距離與所需時間</caption><thead><tr><th scope="col">分段／範圍</th><th scope="col">距離 km</th><th scope="col">配速 /km</th><th scope="col">此段時間</th></tr></thead><tbody id="segmentRows"></tbody></table></div></article>
+<article class="panel table-panel"><div class="result-head"><h2>分段檢查，把時間差看清楚。</h2><span class="tag">含三段交界與終點</span></div><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="累計時間表，可橫向捲動"><table><caption class="help" style="text-align:left;padding-top:6px">每 5 公里、三段交界與終點的累計時間</caption><thead><tr><th scope="col">檢查點</th><th scope="col">目標累計</th><th scope="col">計畫累計</th><th scope="col">時間差</th></tr></thead><tbody id="splitRows"></tbody></table></div><p class="caption" style="margin-top:14px">先以完整精度計算，再將各欄位取整秒顯示。各段時間或差距分別取整，可能有 1 秒顯示差異。</p></article>
 </section>
 </div>
-<section class="panel save-panel"><div><h2>留下這次的配速計畫</h2><label class="label" for="note">跑前筆記 <span style="font-weight:400;color:var(--muted)">（選填，最多 120 字）</span></label><textarea id="note" maxlength="120" placeholder="例如：先用穩定配速試算，再比較最後一段慢下來的差別。"></textarea><div class="save-actions"><button class="primary" type="button" id="save">儲存到此瀏覽器</button><button type="button" id="load">讀取已存計畫</button><button type="button" id="clearSaved">刪除已存計畫</button></div><p class="status" id="saveStatus" role="status">只保存在這個瀏覽器，不會傳送到伺服器。</p></div><aside class="notes"><strong>這個工具能告訴你什麼？</strong><p>當配速改變時，完賽時間會差多少。前段跑快與後段掉速是你分別設定的假設，程式不推斷兩者的因果。</p><strong>使用情境與限制</strong><p>這是配速計算與情境模擬，沒有訓練 AI 預測模型，也不會讀取心率、連接手錶或預測疲勞。停等、補給、坡度與天氣的影響未納入計算。</p></aside></section>
-<details><summary>想知道怎麼算？查看計算方式</summary><p>先以你輸入的目標時間，換算出全程維持一致速度時的配速。接著把路程切成前、中、後三段，各段距離乘上每公里秒數後加總。</p><div class="formula">目標配速（秒/km）＝ 目標總秒數 ÷ 總公里數<br>前段配速 ＝ 目標配速 ＋ 前段差距（秒/km）<br>中段配速 ＝ 目標配速<br>後段配速 ＝ 目標配速 ×（1 ＋ 增加百分比 ÷ 100）<br>情境總時間 ＝ 前段距離 × 前段配速 ＋ 中段距離 × 中段配速 ＋ 後段距離 × 後段配速<br>時間差 ＝ 情境總時間 − 目標總時間（正數為超過目標）</div><p>前段終點可以等於後段起點，此時中段距離為 0。終點不足 5 公里的部分仍會按實際距離計算。顯示採四捨五入，不將已取整的平均配速再乘回距離。</p></details>
+<section class="panel analysis-panel" id="afterRun" aria-labelledby="afterRunTitle">
+<div class="result-head"><div><p class="eyebrow">AFTER YOUR RUN</p><h2 id="afterRunTitle">跑完了，和計畫對一對。</h2></div><span class="tag">TCX 僅在本機處理</span></div>
+<p class="help">匯入 COROS 匯出的 TCX，使用時間與累計距離比較目前計畫。主配速採「經過時間」，包含期間的停等；不把分圈總時間直接當成移動時間。</p>
+<div class="import-grid"><div><label class="label" for="tcxFile">選擇一份 TCX 紀錄</label><input type="file" id="tcxFile" accept=".tcx,application/xml,text/xml"><p class="help">完整原始檔可能包含 GPS，僅保存在這個瀏覽器；不會上傳。最多保留 5 份，可在下方刪除。</p></div><div><label class="label" for="recordSelect">已匯入的紀錄</label><select id="recordSelect" disabled><option value="">尚無紀錄</option></select><div class="record-actions"><button type="button" id="deleteRecord" disabled>刪除此紀錄</button><span class="help" id="recordCount">0 / 5 份</span></div></div></div>
+<p class="status" id="importStatus" role="status">資料僅存此瀏覽器，不跨裝置同步。請保留原始檔作備份。</p>
+<p class="error" id="importError" role="alert"></p>
+<div id="recordControls" hidden><p class="record-meta" id="recordMeta"></p><div class="start-row"><div class="field"><label class="label" for="analysisStart">從紀錄的幾公里開始分析？</label><div class="unit-field"><input id="analysisStart" type="number" min="0" step="any" value="0" inputmode="decimal" aria-describedby="startHelp analysisError"><span>km</span></div><p class="help" id="startHelp">例如暖身 2 km，就填 2；分析到計畫距離為止，剩餘收操不納入。</p></div><div class="analysis-policy">所有紀錄都與<strong>目前畫面上的最新計畫</strong>比較。修改計畫會重新分析；每份紀錄分別記住上次有效的分析起點。</div></div></div>
+<p class="error" id="analysisError" role="alert"></p>
+<div id="analysisResults" hidden>
+<p class="result-line" id="completionStatus" aria-live="polite"></p>
+<div class="analysis-stats"><div><span class="stat-label">實際經過時間</span><strong id="actualElapsed">—</strong><small id="actualAverage">—</small></div><div><span class="stat-label">同距離計畫時間</span><strong id="matchedPlanTime">—</strong><small id="matchedDistance">—</small></div><div><span class="stat-label">實際 − 計畫</span><strong id="actualDifference">—</strong><small>正數為比計畫慢</small></div><div><span class="stat-label">移動時間</span><strong class="unknown-time">無法判定</strong><small>尚無經驗證可靠的移動／暫停計時資訊</small></div></div>
+<p class="quality-note" id="qualityNote"></p>
+<div class="legend"><span><i class="line-key base"></i>同區間計畫配速</span><span><i class="line-key"></i>實際配速（經過時間）</span><span><b class="drop-key">◆</b>2 km 區間掉速</span></div>
+<label class="terrain-toggle"><input type="checkbox" id="showTerrain" aria-controls="terrainPanel">顯示地形對照（每 200 公尺）</label>
+<svg id="actualChart" class="chart" viewBox="0 0 680 250" role="img" aria-labelledby="actualChartTitle actualChartDesc"><title id="actualChartTitle">計畫與實際每公里配速</title><desc id="actualChartDesc">詳細數字請見下方每公里表格。</desc></svg>
+<p class="caption">橫軸為從分析起點算起的公里數；配速數字變大表示更慢。最後不足 1 km 以空心圓顯示，門檻判定只使用完整公里。</p>
+<section id="terrainPanel" class="terrain-panel" aria-labelledby="terrainTitle" hidden>
+<h3 id="terrainTitle">這段路的起伏，與當時的配速</h3>
+<p class="help">上下兩圖使用相同距離軸：上圖為每 200 m 經過時間配速，下圖為邊界附近的平滑海拔。橘色底表示區間含資料缺口，不能直接歸因於地形；缺資料處不連線。</p>
+<p class="quality-note" id="terrainStatus"></p>
+<svg id="terrainChart" class="chart" viewBox="0 0 680 410" role="img" aria-labelledby="terrainChartTitle terrainChartDesc"></svg>
+<p class="caption">近似淨坡度＝起訖平滑海拔差 ÷ 紀錄距離差。海拔採邊界 ±25 m 的觀測中位數；同區間可能有上有下，海拔也有量測誤差。只描述同時變化，不判定原因、不換算平路等效配速。</p>
+<details><summary>查看每 200 公尺明細與資料品質</summary><p class="help">距離從分析起點重新起算；不足 200 m 的尾段另列。橫向捲動可看完整欄位。</p><div class="table-scroll" tabindex="0" role="region" aria-label="地形與配速明細，可橫向捲動"><table><thead><tr><th scope="col">區間 km</th><th scope="col">實際 /km</th><th scope="col">海拔起→訖 m</th><th scope="col">淨高差 m</th><th scope="col">近似淨坡度 %</th><th scope="col">資料品質</th></tr></thead><tbody id="terrainRows"></tbody></table></div></details>
+</section>
+<h3 class="analysis-subtitle">三段比較</h3><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="跑後三段比較，可橫向捲動"><table><thead><tr><th scope="col">計畫分段</th><th scope="col">已比較距離</th><th scope="col">計畫配速</th><th scope="col">實際配速</th><th scope="col">至此累計差</th><th scope="col">狀態</th></tr></thead><tbody id="actualSegmentRows"></tbody></table></div>
+<h3 class="analysis-subtitle">每公里明細</h3><p class="help" id="thresholdHelp"></p><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="跑後每公里明細，可橫向捲動"><table><thead><tr><th scope="col">分析區間 km</th><th scope="col">區間時間</th><th scope="col">實際 /km</th><th scope="col">計畫 /km</th><th scope="col">累計差</th><th scope="col">偏離計畫</th><th scope="col">區間掉速</th></tr></thead><tbody id="actualRows"></tbody></table></div>
+</div>
+<div class="analysis-export"><button type="button" id="exportAnalysis" class="primary" disabled>下載分析 CSV ↓</button><p class="help">包含摘要與每公里明細；勾選地形對照時也匯出 200 m 資料。不含 GPS 座標，無有效分析時無法匯出。</p></div>
+<details class="analysis-details"><summary>資料品質、計時與門檻怎麼處理？</summary><p>每完整公里與同區間計畫相差至少 15 秒/km，標示「比計畫快／慢」。至少四個連續完整公里，才比較相鄰兩組 2 km 平均配速：後組比前組慢至少 15 秒/km，標示後組的區間掉速。每前進 1 km 再比較一次，尾段不參與。</p><p>這些是數學門檻，不代表疲勞或體能的判斷。停等、地形等也可能造成變化；本工具未分析原因。</p><p>公里邊界以相鄰有效時間與距離線性插值。若邊界落在缺少核心欄位、明顯採樣缺口，或同距離對應多個時間而無法唯一定位的區域，停止該次分析並說明原因；不跨缺口猜測。區間起訖都可定位時，經過時間差仍保留中間的停等。</p><p>紀錄 0 km 採首筆時間，紀錄終點採最後時間。完全相同的跨圈重複點會合併；距離重設僅在前圈終點與分圈距離完全對應時串接，其餘情形提示無法可靠解析。分圈摘要不取代紀錄點。</p><p>完整原檔保存在 IndexedDB。清除網站資料、私密模式或空間不足可能導致遺失；保存失敗時會明確顯示「未成功保存」。</p></details>
+</section>
+
+<section class="panel save-panel"><div><h2>跑前筆記與自動儲存</h2><label class="label" for="note">跑前筆記 <span style="font-weight:400;color:var(--muted)">（選填，最多 120 字）</span></label><textarea id="note" maxlength="120" placeholder="例如：這次想比較三段都穩定，或前段保守一些的差別。" aria-describedby="noteError"></textarea><p class="field-error" id="noteError"></p><p class="status" id="saveStatus" role="status">有效設定會自動保存在此瀏覽器。</p><p class="help">僅保留最新一份有效計畫；無效輸入不會覆蓋已存設定。清除網站資料可能造成計畫遺失，不會跨裝置同步。</p></div><aside class="notes"><strong>目標和計畫是兩件事</strong><p>目標時間用來比較；三段配速是你真正安排的節奏。系統不會為了湊到目標，偷偷調整你輸入的配速。</p><strong>跑前規劃與跑後比較</strong><p>TCX 分析使用經過時間，包含停等；可選擇顯示地形對照，僅呈現海拔與配速同時變化。天氣、補給與體力狀態未評估，也不預測未完成的路段。</p></aside></section>
+<details><summary>想知道怎麼算？查看計算方式</summary><p>配速全部以秒／公里計算。前、中、後三段均需有正的距離；任何跨越分段邊界的區間，會依重疊距離逐段加總。</p><div class="formula">目標平均配速 ＝ 目標總秒數 ÷ 全程公里數<br>計畫總時間 ＝ 前段距離 × 前段配速 ＋ 中段距離 × 中段配速 ＋ 後段距離 × 後段配速<br>時間差 ＝ 計畫總時間 − 目標總時間（正數為慢於目標）<br>目標平均配速可有小數秒；三段配速使用你輸入的整數秒。</div><p>半馬 2 小時的目標平均配速約為 341.273 秒/km，顯示 5:41/km。三段若都輸入 5:41，計畫使用 341 秒/km，總時間約為 1:59:54，與目標差約 −0:06。這是正常的精度差異。</p><p>暫採的建議預設：新示範分段為前 25%／中 50%／後 25%；距離 0.1–100 km、最多四位小數。分段可自行修改，切換距離時保留修改後的比例。</p></details>
 </main>
-<footer class="wrap"><span>穩穩跑 · 長跑配速小助手</span><span>Vibe Coding 習作｜單檔 HTML / CSS / JavaScript</span></footer>
+<footer class="wrap"><span>穩穩跑 · V2 配速規劃與跑後分析</span><span>單檔 HTML / CSS / JavaScript · TCX 僅在本機</span></footer>
+
 <script>
 'use strict';
-// 配速統一以「秒 / 公里」運算，只在顯示時格式化。
-const STORAGE_KEY='steady-run-plan-v1';
-const DEFAULT={distance:21.0975,hours:2,minutes:0,earlyOffset:0,earlyKm:5,fadeKm:15,slowdown:0,note:''};
+// 純計算函式與畫面／儲存分開，便於驗收。內部單位：秒、公里。
+const STORAGE_KEY='steady-run-plan-v2';
+const DEFAULT={distance:21.0975,hours:2,minutes:0,earlyKm:5.274375,fadeKm:15.823125,earlyMin:5,earlySec:41,middleMin:5,middleSec:41,lateMin:5,lateSec:41,note:''};
+const numericFields=['distance','hours','minutes','earlyKm','fadeKm','earlyMin','earlySec','middleMin','middleSec','lateMin','lateSec'];
 const $=id=>document.getElementById(id);
-const numericFields=['distance','hours','minutes','earlyOffset','earlyKm','fadeKm','slowdown'];
-let currentPlan=null;
-function readPlan(){const p={};for(const id of numericFields)p[id]=$(id).value.trim()===''?NaN:Number($(id).value);p.note=$('note').value;return p;}
+const paceGroups=['early','middle','late'];
+let lastValidDistance=DEFAULT.distance;
+let storageIsAvailable=true;
+
 function validate(p){
- if(!numericFields.every(id=>Number.isFinite(p[id])))return '請填好所有數值欄位，不能留白。';
- if(![10,21.0975,42.195].includes(p.distance))return '請選擇有效的跑步距離。';
- if(!Number.isInteger(p.hours)||!Number.isInteger(p.minutes)||p.hours<0||p.hours>12||p.minutes<0||p.minutes>59)return '小時請填 0–12 的整數，分鐘請填 0–59 的整數。';
- if(p.hours*3600+p.minutes*60<=0)return '目標時間需大於 0。';
- if(!Number.isInteger(p.earlyOffset)||p.earlyOffset< -30||p.earlyOffset>30||!Number.isInteger(p.slowdown)||p.slowdown<0||p.slowdown>30)return '配速差距或後段增加百分比超出可設定範圍。';
- if(p.earlyKm<0||p.fadeKm<p.earlyKm||p.fadeKm>p.distance)return '請確認 0 ≤ 前段結束公里 ≤ 後段開始公里 ≤ 全程距離。';
- const pace=(p.hours*3600+p.minutes*60)/p.distance;
- if(pace+p.earlyOffset<=0)return '前段每公里所需時間必須大於 0，請增加目標時間或減少前段加速。';
- if(typeof p.note!=='string'||p.note.length>120)return '跑前筆記最多 120 字。';
- return '';
+ const errors={};
+ if(!Number.isFinite(p.distance)||p.distance<.1||p.distance>100||Math.abs(p.distance*10000-Math.round(p.distance*10000))>1e-6)errors.distance='距離請填 0.1–100 km，最多四位小數。';
+ if(!Number.isInteger(p.hours)||p.hours<0||p.hours>12||!Number.isInteger(p.minutes)||p.minutes<0||p.minutes>59)errors.target='小時請填 0–12 的整數；分鐘請填 0–59 的整數。';
+ else if(p.hours*3600+p.minutes*60<=0)errors.target='目標時間需大於 0。';
+ if(!Number.isFinite(p.earlyKm)||!Number.isFinite(p.fadeKm))errors.segments='請填好前段終點與後段起點，不能留白。';
+ else if(p.earlyKm<=0||p.earlyKm>=p.fadeKm||p.fadeKm>=p.distance)errors.segments='需符合 0 < 前段終點 < 後段起點 < 全程距離，三段都要有長度。';
+ for(const group of paceGroups){const m=p[group+'Min'],s=p[group+'Sec'],total=m*60+s;
+  if(!Number.isSafeInteger(m)||m<0||!Number.isInteger(s)||s<0||s>59||!Number.isSafeInteger(total)||total<=0||total>Number.MAX_SAFE_INTEGER/100)errors[group+'Pace']='分鐘需為非負整數、秒數為 0–59 整數，配速合計必須大於 0，且不可超出可計算範圍。';
+ }
+ if(typeof p.note!=='string'||p.note.length>120)errors.note='跑前筆記最多 120 字。';
+ return errors;
 }
-function calculate(p){const target=p.hours*3600+p.minutes*60,base=target/p.distance,early=base+p.earlyOffset,late=base*(1+p.slowdown/100);return {target,base,early,late,total:p.earlyKm*early+(p.fadeKm-p.earlyKm)*base+(p.distance-p.fadeKm)*late};}
-function elapsed(km,p,c){return Math.min(km,p.earlyKm)*c.early+Math.max(0,Math.min(km,p.fadeKm)-p.earlyKm)*c.base+Math.max(0,km-p.fadeKm)*c.late;}
+function calculate(p){
+ const target=p.hours*3600+p.minutes*60,base=target/p.distance;
+ const early=p.earlyMin*60+p.earlySec,middle=p.middleMin*60+p.middleSec,late=p.lateMin*60+p.lateSec;
+ const segments=[{name:'前段',start:0,end:p.earlyKm,pace:early},{name:'中段',start:p.earlyKm,end:p.fadeKm,pace:middle},{name:'後段',start:p.fadeKm,end:p.distance,pace:late}];
+ for(const s of segments){s.distance=s.end-s.start;s.time=s.distance*s.pace;}
+ const total=segments.reduce((sum,s)=>sum+s.time,0);
+ return {target,base,early,middle,late,segments,total,difference:total-target};
+}
+function intervalTime(start,end,c){return c.segments.reduce((sum,s)=>sum+Math.max(0,Math.min(end,s.end)-Math.max(start,s.start))*s.pace,0);}
+function elapsed(km,p,c){return intervalTime(0,km,c);}
+function scaleBoundaries(oldDistance,newDistance,earlyKm,fadeKm){return {earlyKm:Number((earlyKm/oldDistance*newDistance).toFixed(10)),fadeKm:Number((fadeKm/oldDistance*newDistance).toFixed(10))};}
 function paceText(sec){const s=Math.round(sec);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
 function timeText(sec){const s=Math.round(Math.abs(sec));return Math.floor(s/3600)+':'+String(Math.floor(s/60)%60).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
-function diffText(sec){const n=Math.round(sec);return (n>0?'+':n<0?'−':'±')+Math.floor(Math.abs(n)/60)+':'+String(Math.abs(n)%60).padStart(2,'0');}
-function checkpoints(distance){const points=[];for(let k=5;k<distance;k+=5)points.push(k);points.push(distance);return points;}
-function kmText(k){return Number.isInteger(k)?String(k):String(k);}
+function diffText(sec){const n=Math.round(sec),s=Math.abs(n);return (n>0?'+':n<0?'−':'±')+Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function kmText(k){return String(Number(k.toFixed(10)));}
+function checkpoints(p){const points=[p.earlyKm,p.fadeKm,p.distance];for(let k=5;k<p.distance;k+=5)points.push(k);return points.sort((a,b)=>a-b).filter((k,i,all)=>i===0||Math.abs(k-all[i-1])>1e-9);}
+function readPlan(){const p={};for(const id of numericFields){const value=$(id).value.trim();p[id]=value===''?NaN:Number(value);}p.note=$('note').value;return p;}
+function applyPlan(p){for(const id of numericFields)$(id).value=p[id];$('note').value=p.note;lastValidDistance=p.distance;syncDistancePreset(p.distance);}
+function syncDistancePreset(distance){$('distancePreset').value=[5,10,21.0975,42.195].includes(distance)?String(distance):'custom';}
+function adjustDistance(){
+ const distance=readPlan().distance;
+ syncDistancePreset(distance);
+ if(validate({...DEFAULT,distance}).distance)return;
+ const a=Number($('earlyKm').value),b=Number($('fadeKm').value);
+ if($('earlyKm').value.trim()!==''&&$('fadeKm').value.trim()!==''&&Number.isFinite(a)&&Number.isFinite(b)){
+  const scaled=scaleBoundaries(lastValidDistance,distance,a,b);$('earlyKm').value=scaled.earlyKm;$('fadeKm').value=scaled.fadeKm;
+ }
+ lastValidDistance=distance;
+}
+function showErrors(errors){
+ const groups={distance:['distance'],target:['hours','minutes'],segments:['earlyKm','fadeKm'],earlyPace:['earlyMin','earlySec'],middlePace:['middleMin','middleSec'],latePace:['lateMin','lateSec'],note:['note']};
+ for(const [key,ids]of Object.entries(groups)){const message=errors[key]||'';$(key+'Error').textContent=message;for(const id of ids)$(id).setAttribute('aria-invalid',String(!!message));}
+ $('formError').textContent=Object.keys(errors).length?'請先修正上方標示的欄位。結果暫時隱藏，最後有效的已存計畫仍保留。':'';
+}
+function addRow(parent,values,lastClass){const tr=document.createElement('tr');for(const [index,value]of values.entries()){const td=document.createElement('td');td.textContent=value;if(index===values.length-1&&lastClass)td.className=lastClass;tr.append(td);}parent.append(tr);}
 function drawChart(p,c){
- const svg=$('paceChart'),width=680,height=235,left=60,right=19,top=20,bottom=37;
- const lo=Math.min(c.base,c.early,c.late),hi=Math.max(c.base,c.early,c.late);
- const pad=Math.max(20,(hi-lo)*.25),ymin=Math.max(0,lo-pad),ymax=hi+pad;
+ const width=680,height=235,left=60,right=19,top=20,bottom=37;
+ const low=Math.min(c.base,c.early,c.middle,c.late),high=Math.max(c.base,c.early,c.middle,c.late),pad=Math.max(20,(high-low)*.25),ymin=Math.max(0,low-pad),ymax=high+pad;
  const x=k=>left+k/p.distance*(width-left-right),y=v=>top+(ymax-v)/(ymax-ymin)*(height-top-bottom);
- let html='<title id="chartTitle">目標配速與情境配速比較</title><desc id="chartDesc">橫軸為公里數，縱軸越高代表越慢。前段 '+paceText(c.early)+'、中段 '+paceText(c.base)+'、後段 '+paceText(c.late)+' 每公里。</desc>';
+ let html='<title id="chartTitle">目標與三段計畫配速比較</title><desc id="chartDesc">前段 '+paceText(c.early)+'、中段 '+paceText(c.middle)+'、後段 '+paceText(c.late)+' 每公里。縱軸越高代表越慢。三段表提供完整數值。</desc>';
  for(let i=0;i<=3;i++){const value=ymin+(ymax-ymin)*i/3,yy=y(value);html+=`<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" stroke="#e5ebe6"/><text x="${left-10}" y="${yy+4}" text-anchor="end" class="axis-label">${paceText(value)}</text>`;}
- const ticks=[0,...checkpoints(p.distance)];for(const k of ticks){if(k!==p.distance&&p.distance-k<2)continue;html+=`<text x="${x(k)}" y="${height-13}" text-anchor="${k===p.distance?'end':'middle'}" class="axis-label">${k===p.distance?p.distance.toFixed(2):k} km</text>`;}
+ const ticks=[0,p.distance*.25,p.distance*.5,p.distance*.75,p.distance];
+ for(const k of ticks)html+=`<text x="${x(k)}" y="${height-13}" text-anchor="${k===p.distance?'end':'middle'}" class="axis-label">${Number(k.toFixed(2))}${k===p.distance?' km':''}</text>`;
  html+=`<line x1="${left}" y1="${y(c.base)}" x2="${x(p.distance)}" y2="${y(c.base)}" stroke="#8b9691" stroke-width="2" stroke-dasharray="5 5"/>`;
- const segments=[[0,p.earlyKm,c.early],[p.earlyKm,p.fadeKm,c.base],[p.fadeKm,p.distance,c.late]].filter(s=>s[1]>s[0]);
- const points=[];for(const [a,b,v] of segments)points.push(`${x(a)},${y(v)}`,`${x(b)},${y(v)}`);
- html+=`<polyline points="${points.join(' ')}" fill="none" stroke="#176b55" stroke-width="3" stroke-linejoin="round"/><circle cx="${x(p.distance)}" cy="${y(segments[segments.length-1][2])}" r="4" fill="#176b55"/>`;
- svg.innerHTML=html;
+ const points=[];for(const s of c.segments)points.push(`${x(s.start)},${y(s.pace)}`,`${x(s.end)},${y(s.pace)}`);
+ html+=`<polyline points="${points.join(' ')}" fill="none" stroke="#176b55" stroke-width="3" stroke-linejoin="round"/><circle cx="${x(p.distance)}" cy="${y(c.late)}" r="4" fill="#176b55"/>`;
+ $('paceChart').innerHTML=html;
 }
-function render(){
- const p=readPlan(),error=validate(p);$('formError').textContent=error;
- $('earlyValue').textContent=Number.isFinite(p.earlyOffset)?(p.earlyOffset===0?'相同配速':`每公里${p.earlyOffset<0?'快':'慢'} ${Math.abs(p.earlyOffset)} 秒`):'—';
- $('slowValue').textContent=p.slowdown+'%';
- $('steady').setAttribute('aria-pressed',String(p.earlyOffset===0&&p.slowdown===0));
- $('fade').setAttribute('aria-pressed',String(p.earlyOffset===-15&&p.slowdown===15));
- $('save').disabled=!!error;$('download').disabled=!!error;$('results').hidden=!!error;
- if(error){currentPlan=null;return;}
- currentPlan=p;const c=calculate(p),diff=c.total-c.target;
- const name={10:'10 公里路跑',21.0975:'半程馬拉松',42.195:'全程馬拉松'}[p.distance];
- $('distanceName').textContent=name;$('distanceMark').textContent=p.distance;
- $('basePace').textContent=paceText(c.base);$('finishTime').textContent=timeText(c.total);$('averagePace').textContent='平均 '+paceText(c.total/p.distance)+' /km';$('timeDiff').textContent=diffText(diff);
- const sign=Math.round(diff);$('diffLabel').textContent=sign>0?'超過目標時間':sign<0?'比目標時間提早':'剛好達到目標';$('timeDiff').style.color=sign>0?'var(--orange)':'var(--teal)';
- const stable=p.earlyOffset===0&&p.slowdown===0;$('scenarioTag').textContent=stable?'穩定配速':p.earlyOffset===-15&&p.slowdown===15?'前快後慢':'自訂情境';
- const earlyGain=-p.earlyKm*p.earlyOffset,lateLoss=(p.distance-p.fadeKm)*(c.late-c.base);
- $('resultSentence').textContent=stable?'全程維持目標配速，試算結果剛好達標。':`前 ${p.earlyKm} km ${earlyGain>=0?'省下':'多用'} ${diffText(Math.abs(earlyGain)).slice(1)}，後 ${Number((p.distance-p.fadeKm).toFixed(4))} km 多用 ${diffText(lateLoss).slice(1)}；全程${sign>0?'超過目標 ':sign<0?'提早 ': '差距 '}${diffText(Math.abs(diff)).slice(1)}。`;
- $('resultSentence').classList.toggle('late',sign>0);
- drawChart(p,c);$('splitRows').replaceChildren();
- for(const k of checkpoints(p.distance)){const actual=elapsed(k,p,c),base=k*c.base,tr=document.createElement('tr');for(const [i,text]of [k===p.distance?`終點 ${kmText(k)} km`:`${k} km`,timeText(base),timeText(actual),diffText(actual-base)].entries()){const td=document.createElement('td');td.textContent=text;if(i===3)td.className=Math.round(actual-base)>0?'plus':'minus';tr.append(td);}$('splitRows').append(tr);}
+function renderPlan(p){
+ const c=calculate(p),difference=Math.round(c.difference);
+ $('distanceName').textContent={5:'5 公里路跑',10:'10 公里路跑',21.0975:'半程馬拉松',42.195:'全程馬拉松'}[p.distance]||'自訂距離';$('distanceMark').textContent=kmText(p.distance);
+ $('basePace').textContent=paceText(c.base);$('finishTime').textContent=timeText(c.total);$('averagePace').textContent='計畫平均 '+paceText(c.total/p.distance)+' /km';$('timeDiff').textContent=diffText(c.difference);
+ $('diffLabel').textContent=difference>0?'比目標時間慢':difference<0?'比目標時間提早':'與目標差不到半秒';$('timeDiff').style.color=difference>0?'var(--orange)':'var(--teal)';
+ $('resultSentence').textContent=`依三段安排，計畫 ${timeText(c.total)}；目標 ${timeText(c.target)}，${difference>0?'慢於目標':difference<0?'快於目標':'取整後差距為'} ${diffText(Math.abs(c.difference)).slice(1)}。`;
+ $('resultSentence').classList.toggle('late',difference>0);
+ $('precisionNote').textContent=`目標平均配速約 ${c.base.toFixed(3)} 秒/km；你的三段配速按輸入整秒計算，系統不會暗中補入小數秒。`;
+ const rangeIds=['earlyRange','middleRange','lateRange'];
+ $('segmentRows').replaceChildren();c.segments.forEach((s,index)=>{const range=`${kmText(s.start)}–${kmText(s.end)} km`;$ (rangeIds[index]).textContent=range;addRow($('segmentRows'),[s.name+' '+range,kmText(s.distance),paceText(s.pace),timeText(s.time)]);});
+ $('segmentHint').textContent=`目前比例：前 ${(p.earlyKm/p.distance*100).toFixed(1)}%／中 ${((p.fadeKm-p.earlyKm)/p.distance*100).toFixed(1)}%／後 ${((p.distance-p.fadeKm)/p.distance*100).toFixed(1)}%。切換距離時保留此比例。`;
+ $('splitRows').replaceChildren();for(const k of checkpoints(p)){const planned=intervalTime(0,k,c),target=k*c.base;let label=kmText(k)+' km';if(k===p.distance)label='終點 '+label;else if(Math.abs(k-p.earlyKm)<1e-9)label='前段終點 '+label;else if(Math.abs(k-p.fadeKm)<1e-9)label='後段起點 '+label;addRow($('splitRows'),[label,timeText(target),timeText(planned),diffText(planned-target)],Math.round(planned-target)>0?'plus':'minus');}
+ drawChart(p,c);
 }
-function applyPlan(p){for(const id of numericFields)$(id).value=p[id];$('note').value=p.note;$('earlyKm').max=p.distance;$('fadeKm').max=p.distance;render();}
-function preset(earlyOffset,slowdown){$('earlyOffset').value=earlyOffset;$('slowdown').value=slowdown;render();}
-function status(message){$('saveStatus').textContent=message;}
-$('planForm').addEventListener('submit',e=>e.preventDefault());
-$('planForm').addEventListener('input',render);
-$('distance').addEventListener('change',()=>{const d=Number($('distance').value),suggested={10:[1,0,3,7],21.0975:[2,0,5,15],42.195:[4,0,10,30]}[d];[$('hours').value,$('minutes').value,$('earlyKm').value,$('fadeKm').value]=suggested;$('earlyKm').max=d;$('fadeKm').max=d;render();status('已切換距離並套用該距離的示範時間與分段，可繼續修改。');});
-$('steady').addEventListener('click',()=>preset(0,0));$('fade').addEventListener('click',()=>preset(-15,15));
-$('reset').addEventListener('click',()=>{applyPlan({...DEFAULT});status('已恢復半馬 2 小時預設；原先儲存的計畫仍保留。');});
-$('save').addEventListener('click',()=>{const p=readPlan(),error=validate(p);if(error){render();return;}try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:1,plan:p}));status('已儲存目前設定與筆記。下次可按「讀取已存計畫」。');}catch{status('此瀏覽器無法儲存資料，請檢查隱私或儲存空間設定。');}});
-$('load').addEventListener('click',()=>{try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw){status('目前沒有已存計畫，先調整設定再按儲存。');return;}const data=JSON.parse(raw);if(data.version!==1||!data.plan||validate(data.plan))throw Error('invalid');applyPlan(data.plan);status('已讀取此瀏覽器上次儲存的設定與筆記。');}catch{status('無法讀取計畫，資料可能損壞或瀏覽器限制存取。可重新設定後儲存。');}});
-$('clearSaved').addEventListener('click',()=>{try{localStorage.removeItem(STORAGE_KEY);status('已刪除儲存的計畫；畫面上的設定仍保留。');}catch{status('此瀏覽器不允許刪除儲存資料。');}});
-$('note').addEventListener('input',()=>{if(currentPlan)currentPlan.note=$('note').value;});
-$('download').addEventListener('click',()=>{const p=readPlan();if(validate(p)){render();return;}const c=calculate(p),rows=[['距離公里','穩定配速累計時間','情境累計時間','差距秒數'],...checkpoints(p.distance).map(k=>[k,timeText(k*c.base),timeText(elapsed(k,p,c)),Math.round(elapsed(k,p,c)-k*c.base)])];const csv='\uFEFF'+rows.map(r=>r.join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='running-pace-splits.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
-applyPlan({...DEFAULT});
+function savePlan(p){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:2,plan:p}));storageIsAvailable=true;$('saveStatus').textContent='已自動儲存最新有效設定與筆記。重新整理可恢復。';}catch{storageIsAvailable=false;$('saveStatus').textContent='未成功保存：瀏覽器限制存取或儲存空間不足。目前計算仍可用，請自行保留設定。';}}
+function update(persist=true){const p=readPlan(),errors=validate(p);showErrors(errors);$('results').hidden=Object.keys(errors).length>0;if(Object.keys(errors).length){$('saveStatus').textContent='目前輸入無效，未更新儲存；上次有效計畫仍保留。';return;}renderPlan(p);if(persist)savePlan(p);}
+function restore(){
+ let p={...DEFAULT},message='半馬 2 小時示範已載入。修改有效設定後會自動儲存。';
+ try{const raw=localStorage.getItem(STORAGE_KEY);if(raw){const saved=JSON.parse(raw);if(saved.version!==2||!saved.plan||Object.keys(validate(saved.plan)).length)throw Error('invalid');p=saved.plan;message='已恢復此瀏覽器最後一份有效計畫與筆記。';}}
+ catch{storageIsAvailable=false;message='未能讀取已存計畫，已載入示範。修改前未覆蓋既有儲存資料。';}
+ applyPlan(p);update(false);$('saveStatus').textContent=message;
+}
+$('planForm').addEventListener('submit',event=>event.preventDefault());
+$('planForm').addEventListener('input',event=>{if(event.target.id==='distancePreset')return;if(event.target.id==='distance')adjustDistance();update();});
+$('distancePreset').addEventListener('change',()=>{if($('distancePreset').value==='custom'){$('distance').focus();return;}$('distance').value=$('distancePreset').value;adjustDistance();update();});
+$('note').addEventListener('input',()=>update());
+$('reset').addEventListener('click',()=>{applyPlan({...DEFAULT});update();if(storageIsAvailable)$('saveStatus').textContent='已恢復並自動儲存半馬示範；此動作不刪除 TCX 資料。';});
+restore();
+
+// 跑後分析：使用時間、累計距離與選填海拔；原始 TCX 僅寫入本機 IndexedDB。
+const TCX_DB='steady-run-tcx-v2',TCX_STORE='records';
+let records=[],selectedRecord=null,selectedParsed=null,activeAnalysis=null,tcxDb=null,tcxDbFailed=false,importing=false,startSaveTimer=null;
+function localChild(node,name){return Array.from(node.children||[]).find(e=>e.localName===name)||null;}
+function localText(node,name){const e=localChild(node,name);return e?(e.textContent||'').trim():null;}
+function descendants(node,name){return Array.from(node.getElementsByTagNameNS('*',name));}
+function fail(message){throw new Error(message);}
+function parseTCX(raw){
+ if(typeof raw!=='string'||!raw.trim())fail('檔案內容為空，無法解析 TCX。');
+ if(/<!DOCTYPE|<!ENTITY/i.test(raw))fail('不支援含外部實體或 DTD 的 XML，請使用原始 TCX 匯出檔。');
+ const doc=new DOMParser().parseFromString(raw,'application/xml');
+ if(descendants(doc,'parsererror').length||doc.documentElement.localName!=='TrainingCenterDatabase')fail('檔案不是有效的 TrainingCenterDatabase TCX XML。');
+ const activities=descendants(doc,'Activity');if(activities.length!==1)fail('此版需一份檔案包含一筆運動；目前找到 '+activities.length+' 筆，無法可靠合併。');
+ const activity=activities[0],laps=descendants(activity,'Lap');if(!laps.length)fail('TCX 缺少 Lap／Trackpoint 運動紀錄。');
+ const points=[],warnings=[],gaps=[];let timeOrigin=null,missing=0,duplicates=0,offset=0,previousRawLast=null,previousLapDistance=null,pendingMissing=false,lastTimestamp=null;
+ for(let li=0;li<laps.length;li++){
+  const lap=laps[li],trackpoints=descendants(lap,'Trackpoint');if(!trackpoints.length)fail('第 '+(li+1)+' 圈沒有可用紀錄點。');
+  const lapDistanceText=localText(lap,'DistanceMeters'),lapDistance=lapDistanceText===null?NaN:Number(lapDistanceText);
+  let firstInLap=true,rawLast=null;
+  for(const node of trackpoints){
+   const timeValue=localText(node,'Time');if(!timeValue)fail('紀錄點缺少核心時間戳記，無法建立可靠時間順序。');
+   const absolute=Date.parse(timeValue)/1000;if(!Number.isFinite(absolute))fail('紀錄點時間戳記格式無效。');
+   if(lastTimestamp!==null&&absolute<lastTimestamp)fail('時間戳記倒退，停止解析以免產生錯誤配速。');lastTimestamp=absolute;
+   if(timeOrigin===null)timeOrigin=absolute;
+   const distanceText=localText(node,'DistanceMeters');
+   if(distanceText===null||distanceText===''){missing++;pendingMissing=true;continue;}
+   const rawMeters=Number(distanceText);if(!Number.isFinite(rawMeters)||rawMeters<0)fail('紀錄點累計距離不是有效非負數值。');
+   if(firstInLap){
+    if(li>0&&previousRawLast!==null&&rawMeters<previousRawLast-1e-7){
+     if(rawMeters!==0||!Number.isFinite(previousLapDistance)||Math.abs(previousRawLast-previousLapDistance)>1e-6)fail('跨圈累計距離重設，但前圈終點與分圈距離無法無歧義對齊。');
+     offset=points[points.length-1].d;
+    }
+    firstInLap=false;
+   }else if(rawLast!==null&&rawMeters<rawLast-1e-7)fail('同一圈累計距離倒退，停止解析。');
+   rawLast=rawMeters;const d=rawMeters+offset,t=absolute-timeOrigin,prev=points[points.length-1];
+   if(prev&&d<prev.d-1e-7)fail('累計距離倒退，無法可靠串接。');
+   if(prev&&t===prev.t){if(Math.abs(d-prev.d)>1e-7)fail('同一時間對應不同累計距離，無法計算。');duplicates++;continue;}
+   if(prev&&pendingMissing)gaps.push({from:prev.d,to:d,reason:'中間紀錄點缺少距離'});
+   const altitudeText=localText(node,'AltitudeMeters'),altitude=altitudeText===null||altitudeText===''?null:Number(altitudeText);
+   points.push({d,t,a:Number.isFinite(altitude)?altitude:null});pendingMissing=false;
+  }
+  previousRawLast=rawLast;previousLapDistance=lapDistance;
+ }
+ if(points.length<2)fail('可用的時間／距離紀錄點不足。');
+ if(points[0].d!==0||points[0].t!==0)fail('首筆紀錄缺少可定位的 0 km 起點，不能推估缺少的起始時間或距離。');
+ if(pendingMissing)fail('最後的紀錄點缺少累計距離，無法可靠定位紀錄終點。');
+ const end=points[points.length-1];if(end.d<=0||end.t<=0)fail('紀錄沒有正的距離或經過時間。');
+ const intervals=points.slice(1).map((p,i)=>p.t-points[i].t).filter(v=>v>0).sort((a,b)=>a-b),median=intervals[Math.floor(intervals.length/2)]||1,gapLimit=Math.max(30,median*10);
+ for(let i=1;i<points.length;i++)if(points[i].t-points[i-1].t>gapLimit)gaps.push({from:points[i-1].d,to:points[i].d,reason:'採樣時間缺口超過 '+Math.round(gapLimit)+' 秒'});
+ const groups=[];for(const p of points){const g=groups[groups.length-1];if(g&&Math.abs(g.d-p.d)<1e-7){g.last=p.t;g.count++;}else groups.push({d:p.d,first:p.t,last:p.t,count:1});}
+ if(missing)warnings.push(missing+' 個紀錄點缺少距離，沒有用它們插值');
+ if(duplicates)warnings.push('合併 '+duplicates+' 個完全相同的跨圈／重複紀錄點');
+ if(gaps.length)warnings.push('存在資料缺口：邊界落入缺口時停止分析；可定位的起訖時間差仍包含停等');
+ if(median>10)warnings.push('紀錄點較稀疏，配速是區間平均，並非即時速度');
+ const dateValue=localText(activity,'Id')||localText(descendants(activity,'Trackpoint')[0],'Time');
+ return {points,groups,gaps,distance:end.d/1000,elapsed:end.t,date:dateValue,missing,duplicates,lapCount:laps.length,warnings,moving:null};
+}
+function timeAt(km,data){
+ const meters=km*1000,end=data.groups[data.groups.length-1];
+ if(meters< -1e-6||meters>end.d+1e-6)fail('分析邊界超出可用紀錄距離。');
+ if(Math.abs(meters)<1e-6)return data.points[0].t;
+ if(Math.abs(meters-end.d)<1e-6)return data.points[data.points.length-1].t;
+ let lo=0,hi=data.groups.length;while(lo<hi){const mid=(lo+hi)>>1;if(data.groups[mid].d<meters-1e-6)lo=mid+1;else hi=mid;}
+ const right=data.groups[lo];
+ if(right&&Math.abs(right.d-meters)<1e-6){if(right.last-right.first>1e-7)fail('距離 '+kmText(km)+' km 對應多個時間，無法唯一定位；請調整分析起點或區間。');return right.first;}
+ const left=data.groups[lo-1];if(!left||!right)fail('分析邊界沒有可用的前後紀錄點。');
+ const gap=data.gaps.find(g=>meters>g.from+1e-6&&meters<g.to-1e-6);if(gap)fail('距離 '+kmText(km)+' km 落在資料缺口（'+gap.reason+'），停止插值；請調整分析起點或區間。');
+ return left.last+(right.first-left.last)*(meters-left.d)/(right.d-left.d);
+}
+function analyzeRun(plan,data,start){
+ if(Object.keys(validate(plan)).length)fail('目前跑前計畫有無效欄位，請先修正計畫。');
+ if(!Number.isFinite(start)||start<0||start>=data.distance)fail('分析起點需為 0 到紀錄總距離之前的有效公里數。');
+ const c=calculate(plan),length=Math.min(plan.distance,data.distance-start);if(length<=0)fail('沒有可供分析的距離。');
+ const t0=timeAt(start,data),elapsedTotal=timeAt(start+length,data)-t0;if(elapsedTotal<=0)fail('分析區間沒有有效的正經過時間。');
+ const count=Math.floor(length+1e-9),rows=[];
+ const endpoints=[];for(let k=1;k<=count;k++)endpoints.push(Math.min(k,length));if(length-count>1e-9)endpoints.push(length);
+ let from=0;
+ for(const to of endpoints){const distance=to-from,actualTime=timeAt(start+to,data)-timeAt(start+from,data),plannedTime=intervalTime(from,to,c);if(actualTime<=0)fail('分析區間時間非正數，停止分析。');
+  const pace=actualTime/distance,plannedPace=plannedTime/distance,full=Math.abs(distance-1)<1e-8,delta=pace-plannedPace;
+  const deviation=full?(delta>=15-1e-7?'比計畫慢 '+Math.abs(delta).toFixed(1)+' 秒/km':delta<=-15+1e-7?'比計畫快 '+Math.abs(delta).toFixed(1)+' 秒/km':'門檻內'):'尾段不判定';
+  rows.push({from,to,distance,actualTime,plannedTime,pace,plannedPace,actualCumulative:timeAt(start+to,data)-t0,plannedCumulative:intervalTime(0,to,c),full,deviation,drop:[]});from=to;
+ }
+ for(let i=3;i<count;i++){
+  const previous=(rows[i-3].pace+rows[i-2].pace)/2,later=(rows[i-1].pace+rows[i].pace)/2;
+  if(later-previous>=15-1e-7){const label=kmText(rows[i-1].from)+'–'+kmText(rows[i].to)+' km 區間掉速';rows[i-1].drop.push(label);rows[i].drop.push(label);}
+ }
+ const segments=c.segments.map(s=>{const end=Math.min(s.end,length),distance=Math.max(0,end-s.start),status=distance<=0?'未完成':end<s.end-1e-9?'部分完成':'完成';if(!distance)return {...s,completed:0,status,actualPace:null,delta:null};
+  try{const actual=timeAt(start+end,data)-timeAt(start+s.start,data);return {...s,completed:distance,status,plannedPace:intervalTime(s.start,end,c)/distance,actualPace:actual/distance,delta:timeAt(start+end,data)-t0-intervalTime(0,end,c)};}
+  catch(error){return {...s,completed:distance,status,actualPace:null,delta:null,error:error.message};}
+ });
+ const plannedTotal=intervalTime(0,length,c);
+ return {plan,c,start,length,elapsed:elapsedTotal,average:elapsedTotal/length,planned:plannedTotal,delta:elapsedTotal-plannedTotal,complete:length>=plan.distance-1e-9,rows,segments};
+}
+function csvCell(value){if(typeof value==='number'&&Number.isFinite(value))return String(value);let text=String(value??'');if(/^\s*[=+\-@]/.test(text))text="'"+text;return /[",\r\n]/.test(text)?'"'+text.replaceAll('"','""')+'"':text;}
+// 僅做距離對齊的描述性對照；不從坡度推算體力或因果。
+function analyzeTerrain(result,data){
+ const altitude=data.points.filter(p=>Number.isFinite(p.a)),first=altitude[0],last=altitude[altitude.length-1];
+ function elevationAt(km){
+  const d=km*1000;if(!first||d<first.d-1e-6||d>last.d+1e-6)return null;
+  if(data.gaps.some(g=>d>g.from+1e-6&&d<g.to-1e-6))return null;
+  const near=altitude.filter(p=>Math.abs(p.d-d)<=25+1e-6).map(p=>p.a).sort((a,b)=>a-b);
+  if(!near.length)return null;const i=Math.floor(near.length/2);return near.length%2?near[i]:(near[i-1]+near[i])/2;
+ }
+ const rows=[],count=Math.ceil(result.length/.2-1e-9);
+ for(let i=0;i<count;i++){
+  const from=i*.2,to=Math.min((i+1)*.2,result.length),a=result.start+from,b=result.start+to,ea=elevationAt(a),eb=elevationAt(b);
+  let pace=null,timeError='';try{pace=(timeAt(b,data)-timeAt(a,data))/(to-from);if(!(pace>0)){pace=null;timeError='區間時間無效';}}catch(error){timeError=error.message;}
+  const gap=data.gaps.some(g=>g.from<b*1000-1e-6&&g.to>=a*1000-1e-6),delta=ea===null||eb===null?null:eb-ea,grade=delta===null?null:delta/((to-from)*1000)*100;
+  const notes=[];if(delta===null)notes.push('海拔覆蓋不足／邊界有缺口');if(timeError)notes.push('配速無法定位');if(gap)notes.push('含紀錄缺口：可能停等或漏採樣，不能歸因');
+  rows.push({from,to,pace,ea,eb,delta,grade,gap,note:notes.join('；')||'可對照，原因仍無法單獨判定'});
+ }
+ return rows;
+}
+function analysisCSV(result,record,data,includeTerrain=false){
+ const p=result.plan,summary=[['項目','數值／狀態'],['檔名',record.name],['紀錄日期',data.date||'無法判定'],['目標距離 km',p.distance],['目標時間',timeText(result.c.target)],['前段範圍 km','0–'+kmText(p.earlyKm)],['前段配速 秒/km',result.c.early],['中段範圍 km',kmText(p.earlyKm)+'–'+kmText(p.fadeKm)],['中段配速 秒/km',result.c.middle],['後段範圍 km',kmText(p.fadeKm)+'–'+kmText(p.distance)],['後段配速 秒/km',result.c.late],['分析起點 原始km',result.start],['已分析距離 km',result.length],['實際經過時間 秒',result.elapsed],['同距離計畫時間 秒',result.planned],['時間差 秒',result.delta],['移動時間','無法判定'],['完成狀態',result.complete?'已涵蓋計畫距離':'僅分析實際完成距離，未外推'],['資料品質',data.warnings.join('；')||'未發現核心資料異常'],[],['區間起點 km','區間終點 km','區間長度 km','計畫配速 秒/km','實際配速 秒/km','區間經過時間 秒','計畫累計 秒','實際累計 秒','累計差距 秒','偏離計畫','2km區間掉速','不足1km尾段']];
+ for(const row of result.rows)summary.push([row.from,row.to,row.distance,row.plannedPace,row.pace,row.actualTime,row.plannedCumulative,row.actualCumulative,row.actualCumulative-row.plannedCumulative,row.deviation,[...new Set(row.drop)].join('；'),row.full?'否':'是']);
+ if(includeTerrain){summary.push([],['地形對照','描述性資料，無法判定因果；海拔採邊界±25m中位數，無覆蓋不外推'],['區間起點 km','區間終點 km','經過時間配速 秒/km','平滑起點海拔 m','平滑終點海拔 m','淨高差 m','近似淨坡度 %','資料品質']);for(const r of result.terrain||analyzeTerrain(result,data))summary.push([r.from,r.to,r.pace,r.ea,r.eb,r.delta,r.grade,r.note]);}
+ return '\uFEFF'+summary.map(row=>row.map(csvCell).join(',')).join('\r\n');
+}
+function openTcxDB(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return reject(Error('IndexedDB 不可用'));const request=indexedDB.open(TCX_DB,1);request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains(TCX_STORE))request.result.createObjectStore(TCX_STORE,{keyPath:'id'});};request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error||Error('無法開啟本機資料庫'));request.onblocked=()=>reject(Error('資料庫被其他分頁占用'));});}
+function dbReadAll(){return new Promise((resolve,reject)=>{const transaction=tcxDb.transaction(TCX_STORE,'readonly'),request=transaction.objectStore(TCX_STORE).getAll();request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);});}
+function dbWrite(record){return new Promise((resolve,reject)=>{if(!tcxDb)return reject(Error('本機資料庫不可用'));const transaction=tcxDb.transaction(TCX_STORE,'readwrite');transaction.objectStore(TCX_STORE).put(record);transaction.oncomplete=()=>resolve();transaction.onerror=()=>reject(transaction.error||Error('寫入失敗'));transaction.onabort=()=>reject(transaction.error||Error('寫入中止'));});}
+function dbDelete(id){return new Promise((resolve,reject)=>{if(!tcxDb)return resolve();const transaction=tcxDb.transaction(TCX_STORE,'readwrite');transaction.objectStore(TCX_STORE).delete(id);transaction.oncomplete=()=>resolve();transaction.onerror=()=>reject(transaction.error);transaction.onabort=()=>reject(transaction.error);});}
+async function fileHash(raw){if(window.crypto?.subtle){const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw));return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');}let hash=2166136261;for(let i=0;i<raw.length;i++)hash=Math.imul(hash^raw.charCodeAt(i),16777619)>>>0;return 'local-'+raw.length+'-'+hash.toString(16);}
+function refreshRecordList(){
+ const select=$('recordSelect');select.replaceChildren();if(!records.length){const option=document.createElement('option');option.value='';option.textContent='尚無紀錄';select.append(option);}else for(const record of records){const option=document.createElement('option');option.value=record.id;option.textContent=record.name+' · '+kmText(record.distance)+' km'+(record.persisted?'':' · 未成功保存');select.append(option);}
+ select.value=selectedRecord?.id||'';select.disabled=!records.length;$('deleteRecord').disabled=!selectedRecord;$('recordCount').textContent=records.length+' / 5 份';
+}
+function formatRecordDate(value){const date=new Date(value);return Number.isFinite(date.getTime())?date.toLocaleString('zh-TW',{timeZone:'Asia/Taipei',hour12:false})+'（台灣時間）':'日期無法判定';}
+function selectRecord(id){
+ selectedRecord=records.find(r=>r.id===id)||null;selectedParsed=null;activeAnalysis=null;$('analysisError').textContent='';$('recordControls').hidden=!selectedRecord;
+ if(selectedRecord){try{selectedParsed=parseTCX(selectedRecord.raw);$('analysisStart').value=selectedRecord.start??0;$('analysisStart').max=selectedParsed.distance;$('recordMeta').textContent=selectedRecord.name+'｜'+formatRecordDate(selectedParsed.date)+'｜可用距離 '+kmText(selectedParsed.distance)+' km｜紀錄經過 '+timeText(selectedParsed.elapsed)+'｜'+selectedParsed.lapCount+' 圈。';}catch(error){$('analysisError').textContent='已存紀錄無法解析：'+error.message;}}
+ refreshRecordList();refreshAnalysis();
+}
+function drawActualChart(result){
+ const rows=result.rows,width=680,height=250,left=62,right=18,top=18,bottom=43;
+ const values=rows.flatMap(r=>[r.pace,r.plannedPace]),low=Math.min(...values),high=Math.max(...values),pad=Math.max(20,(high-low)*.2),ymin=Math.max(0,low-pad),ymax=high+pad;
+ const x=k=>left+k/result.length*(width-left-right),y=v=>top+(ymax-v)/(ymax-ymin)*(height-top-bottom);
+ let svg='<title id="actualChartTitle">計畫與實際每公里配速</title><desc id="actualChartDesc">使用經過時間。實心圓為完整公里，空心圓為不足一公里尾段，菱形標示相鄰兩組2公里比較後的掉速區間。完整數值見下方表格。</desc>';
+ for(let i=0;i<4;i++){const v=ymin+(ymax-ymin)*i/3;svg+=`<line x1="${left}" y1="${y(v)}" x2="${width-right}" y2="${y(v)}" stroke="#e5ebe6"/><text x="${left-9}" y="${y(v)+4}" text-anchor="end" class="axis-label">${paceText(v)}</text>`;}
+ for(let i=0;i<5;i++){const k=result.length*i/4;svg+=`<text x="${x(k)}" y="${height-15}" text-anchor="${i===4?'end':'middle'}" class="axis-label">${Number(k.toFixed(2))}${i===4?' km':''}</text>`;}
+ for(const [key,color,dash]of [['plannedPace','#8b9691','stroke-dasharray="5 5"'],['pace','#176b55','']]){svg+=`<polyline points="${rows.map(r=>x(r.to)+','+y(r[key])).join(' ')}" fill="none" stroke="${color}" stroke-width="2.5" ${dash}/>`;}
+ for(const row of rows){const xx=x(row.to),yy=y(row.pace);svg+=`<circle cx="${xx}" cy="${yy}" r="4" fill="${row.full?'#176b55':'#fff'}" stroke="#176b55" stroke-width="2"/>`;if(row.drop.length)svg+=`<path d="M ${xx} ${yy-12} l 5 5 l -5 5 l -5 -5 Z" fill="#ad5128"/>`;}
+ $('actualChart').innerHTML=svg;
+}
+function renderAnalysis(result,data){
+ $('completionStatus').textContent=result.complete?'已比較完整 '+kmText(result.length)+' km 計畫；實際 '+timeText(result.elapsed)+'，與同距離計畫差 '+diffText(result.delta)+'。':'僅分析已完成 '+kmText(result.length)+' km／計畫 '+kmText(result.plan.distance)+' km；未完成部分不推估。';
+ $('actualElapsed').textContent=timeText(result.elapsed);$('actualAverage').textContent='平均 '+paceText(result.average)+' /km（經過時間）';$('matchedPlanTime').textContent=timeText(result.planned);$('matchedDistance').textContent='同樣比較 '+kmText(result.length)+' km';$('actualDifference').textContent=diffText(result.delta);$('actualDifference').style.color=result.delta>0?'var(--orange)':'var(--teal)';
+ $('qualityNote').textContent=data.warnings.length?'資料品質提示：'+data.warnings.join('；')+'。':'已建立有效時間與累計距離順序；移動時間仍無法由已驗證的資訊判定。';
+ $('actualSegmentRows').replaceChildren();for(const s of result.segments)addRow($('actualSegmentRows'),[s.name+' '+kmText(s.start)+'–'+kmText(s.end)+' km',kmText(s.completed)+' km',s.completed?paceText(s.plannedPace||s.pace):'—',s.actualPace===null?'—':paceText(s.actualPace),s.delta===null?'—':diffText(s.delta),s.error?'無法分析：'+s.error:s.status]);
+ $('actualRows').replaceChildren();for(const row of result.rows)addRow($('actualRows'),[kmText(row.from)+'–'+kmText(row.to)+(row.full?'':'（尾段）'),timeText(row.actualTime),paceText(row.pace),paceText(row.plannedPace),diffText(row.actualCumulative-row.plannedCumulative),row.deviation,[...new Set(row.drop)].join('；')||(row.full?'—':'不判定')]);
+ $('thresholdHelp').textContent='完整公里與計畫相差至少 ±15 秒/km 才標記；'+(result.rows.filter(r=>r.full).length<4?'不足四個完整公里，不判定 2 km 區間掉速。':'相鄰兩組 2 km 比較，後組慢至少 15 秒/km 才標記；菱形與文字表示同一區間。');
+ drawActualChart(result);result.terrain=analyzeTerrain(result,data);renderTerrain(result);
+}
+function renderTerrain(result){
+ const rows=result.terrain;$('terrainPanel').hidden=!$('showTerrain').checked;
+ const valid=rows.filter(r=>r.delta!==null).length,gaps=rows.filter(r=>r.gap).length;
+ $('terrainStatus').textContent=valid?'共 '+rows.length+' 段，其中 '+valid+' 段有起訖海拔可供對照；'+gaps+' 段含紀錄缺口。海拔與配速同時變化不代表因果。':'此分析範圍缺少足夠的海拔覆蓋，地形無法判定；原有配速分析仍可使用。';
+ $('terrainRows').replaceChildren();for(const r of rows)addRow($('terrainRows'),[kmText(r.from)+'–'+kmText(r.to)+(r.to-r.from<.2-1e-8?'（尾段）':''),r.pace===null?'—':paceText(r.pace),(r.ea===null?'—':r.ea.toFixed(1))+' → '+(r.eb===null?'—':r.eb.toFixed(1)),r.delta===null?'—':signedDecimal(r.delta),r.grade===null?'—':signedDecimal(r.grade),r.note]);
+ drawTerrainChart(result);
+}
+function signedDecimal(value){return (value>0?'+':'')+value.toFixed(1);}
+function drawTerrainChart(result){
+ const rows=result.terrain,w=680,left=62,right=18,x=k=>left+k/result.length*(w-left-right);
+ let svg='<title id="terrainChartTitle">每 200 公尺配速與平滑海拔對照</title><desc id="terrainChartDesc">上下兩圖共用距離軸，橘底表示含紀錄缺口。配速越高越慢；海拔越高代表高度越高。缺失資料不連線，完整數字與品質見明細表。</desc>';
+ for(const r of rows)if(r.gap)svg+=`<rect x="${x(r.from)}" y="22" width="${x(r.to)-x(r.from)}" height="346" fill="#fff0dc"/>`;
+ for(const panel of [{top:32,bottom:170,label:'200 m 配速 /km',values:rows.map(r=>r.pace).filter(Number.isFinite),color:'#176b55',key:'pace',pace:true},{top:235,bottom:365,label:'平滑海拔 m',values:rows.flatMap(r=>[r.ea,r.eb]).filter(Number.isFinite),color:'#a56a36',key:'altitude'}]){
+  svg+=`<text x="${left}" y="${panel.top-12}" class="axis-label">${panel.label}</text>`;
+  if(!panel.values.length){svg+=`<text x="${left+15}" y="${panel.top+45}" class="axis-label">無足夠資料，請查看品質提示</text>`;continue;}
+  const low=Math.min(...panel.values),high=Math.max(...panel.values),pad=Math.max(panel.pace?15:3,(high-low)*.1),min=low-pad,max=high+pad,y=v=>panel.bottom-(v-min)/(max-min)*(panel.bottom-panel.top);
+  for(let j=0;j<3;j++){const v=min+(max-min)*j/2;svg+=`<line x1="${left}" y1="${y(v)}" x2="${w-right}" y2="${y(v)}" stroke="#e5ebe6"/><text x="${left-8}" y="${y(v)+4}" text-anchor="end" class="axis-label">${panel.pace?paceText(v):Math.round(v)}</text>`;}
+  if(panel.pace){for(const r of rows)if(r.pace!==null)svg+=`<line x1="${x(r.from)}" y1="${y(r.pace)}" x2="${x(r.to)}" y2="${y(r.pace)}" stroke="${panel.color}" stroke-width="2.5"/><circle cx="${x((r.from+r.to)/2)}" cy="${y(r.pace)}" r="2.5" fill="${panel.color}"/>`;}
+  else for(const r of rows)if(r.ea!==null&&r.eb!==null&&!r.gap)svg+=`<line x1="${x(r.from)}" y1="${y(r.ea)}" x2="${x(r.to)}" y2="${y(r.eb)}" stroke="${panel.color}" stroke-width="2.5"/>`;
+ }
+ for(let j=0;j<5;j++){const k=result.length*j/4;svg+=`<text x="${x(k)}" y="395" text-anchor="${j===4?'end':'middle'}" class="axis-label">${Number(k.toFixed(2))}${j===4?' km':''}</text>`;}
+ $('terrainChart').innerHTML=svg;
+}
+function refreshAnalysis(){
+ activeAnalysis=null;$('analysisResults').hidden=true;$('exportAnalysis').disabled=true;$('analysisError').textContent='';$('analysisStart').setAttribute('aria-invalid','false');
+ if(!selectedParsed||!selectedRecord)return;
+ const text=$('analysisStart').value.trim(),start=text===''?NaN:Number(text);
+ try{activeAnalysis=analyzeRun(readPlan(),selectedParsed,start);renderAnalysis(activeAnalysis,selectedParsed);$('analysisResults').hidden=false;$('exportAnalysis').disabled=false;}
+ catch(error){$('analysisError').textContent=error.message;$('analysisStart').setAttribute('aria-invalid',String(!Number.isFinite(start)||start<0||start>=selectedParsed.distance));}
+}
+async function persistStart(record,start){const updated={...record,start};try{await dbWrite(updated);updated.persisted=true;const index=records.findIndex(r=>r.id===record.id);if(index>=0)records[index]=updated;if(selectedRecord?.id===updated.id)selectedRecord=updated;$('importStatus').textContent='已保存此紀錄的分析起點。所有紀錄依目前最新計畫比較。';}catch{const existing=records.find(r=>r.id===record.id);if(existing)existing.start=start;$('importStatus').textContent='分析起點未成功保存，這次畫面可用；重新整理可能恢復先前起點。';}}
+async function importFile(file){
+ if(importing)return;importing=true;$('tcxFile').disabled=true;$('importError').textContent='';$('importStatus').textContent='正在本機解析與檢查 TCX…';
+ try{const raw=await file.text(),parsed=parseTCX(raw),duplicate=records.find(r=>r.raw===raw);if(duplicate){selectRecord(duplicate.id);$('importStatus').textContent='已保存此紀錄，未重複占用名額。';return;}
+  if(records.length>=5)fail('已達 5 份紀錄上限。請先選擇並刪除不需保留的紀錄，再匯入新檔；沒有自動覆蓋舊檔。');
+  let id=await fileHash(raw);while(records.some(r=>r.id===id))id+='-new';const record={id,name:file.name,raw,distance:parsed.distance,date:parsed.date,start:0,importedAt:Date.now(),persisted:false};
+  try{await dbWrite(record);record.persisted=true;}catch{tcxDbFailed=true;}
+  records.unshift(record);selectRecord(id);$('importStatus').textContent=record.persisted?'已在此瀏覽器保存完整 TCX，可切換紀錄；原檔未上傳。':'未成功保存 TCX：本機資料庫不可用或空間不足。此分頁仍可分析，請保留原始檔。';
+ }catch(error){$('importError').textContent='匯入失敗：'+error.message;$('importStatus').textContent=selectedRecord?'原先選取的紀錄仍保留；下方標示其檔名，並非這次失敗的檔案。':'尚未匯入有效紀錄。';}
+ finally{importing=false;$('tcxFile').disabled=false;$('tcxFile').value='';}
+}
+$('tcxFile').addEventListener('change',()=>{const file=$('tcxFile').files[0];if(file)importFile(file);});
+$('recordSelect').addEventListener('change',()=>{clearTimeout(startSaveTimer);$('importError').textContent='';selectRecord($('recordSelect').value);$('importStatus').textContent=selectedRecord?.persisted?'已選取本機保存的紀錄，依最新計畫分析。':'此紀錄未成功保存，請保留原始檔。';});
+$('analysisStart').addEventListener('input',()=>{clearTimeout(startSaveTimer);refreshAnalysis();if(activeAnalysis&&selectedRecord){const record=selectedRecord,start=activeAnalysis.start;startSaveTimer=setTimeout(()=>persistStart(record,start),200);}});
+$('deleteRecord').addEventListener('click',async()=>{if(!selectedRecord)return;clearTimeout(startSaveTimer);const record=selectedRecord;try{await dbDelete(record.id);records=records.filter(r=>r.id!==record.id);selectRecord(records[0]?.id||'');$('importError').textContent='';$('importStatus').textContent='已刪除此瀏覽器內的紀錄、分析起點與中繼資料；電腦上的原始檔未更動。';}catch{$('importError').textContent='刪除未成功，紀錄仍保留。';}});
+$('showTerrain').addEventListener('change',()=>{if(activeAnalysis)renderTerrain(activeAnalysis);});
+$('exportAnalysis').addEventListener('click',()=>{refreshAnalysis();if(!activeAnalysis)return;const csv=analysisCSV(activeAnalysis,selectedRecord,selectedParsed,$('showTerrain').checked),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download='steady-run-analysis.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+document.addEventListener('input',event=>{if(numericFields.includes(event.target.id)||event.target.id==='note')refreshAnalysis();});
+document.addEventListener('change',event=>{if(event.target.id==='distancePreset')refreshAnalysis();});
+document.addEventListener('click',event=>{if(event.target.closest('#reset'))refreshAnalysis();});
+async function initializeTCX(){try{tcxDb=await openTcxDB();records=(await dbReadAll()).map(r=>({...r,persisted:true})).sort((a,b)=>b.importedAt-a.importedAt);selectRecord(records[0]?.id||'');$('importStatus').textContent=records.length?'已讀取 '+records.length+' 份本機紀錄，選取後依目前計畫分析。':'尚無已存紀錄。可選擇 TCX，資料僅保存在本機。';}catch{tcxDbFailed=true;$('importStatus').textContent='本機資料庫不可用；仍可匯入分析，但未成功保存，關閉分頁後可能遺失。';}}
+initializeTCX();
+
 </script>
 </body>
 </html>
