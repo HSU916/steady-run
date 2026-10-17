@@ -30,6 +30,8 @@
 @media print{.import-grid,.record-actions,.analysis-export,.analysis-details{display:none}.analysis-panel{break-inside:auto}.analysis-panel .table-scroll{overflow:visible}}
 
 .terrain-toggle{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;margin:16px 0;cursor:pointer}.terrain-toggle input{width:18px;height:18px;accent-color:var(--teal);flex-shrink:0}.terrain-panel{margin:16px 0 25px;padding:18px;background:#fcfdfb;border:1px solid var(--line);border-radius:12px;min-width:0}.terrain-panel h3{font-size:17px;margin:0 0 10px}.terrain-panel summary{font-size:13px;cursor:pointer}.terrain-panel .quality-note{margin:12px 0}.terrain-panel[hidden]{display:none}@media(max-width:760px){.terrain-panel{padding:12px}.terrain-toggle{font-size:12px}}
+
+.terrain-chart-stack{display:grid;gap:15px;margin:16px 0}.terrain-chart-card{margin:0;padding:15px 16px 10px;background:white;border:1px solid var(--line);border-radius:10px;min-width:0}.terrain-chart-card figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-bottom:10px}.terrain-chart-card figcaption strong{font-size:15px}.terrain-chart-card figcaption span,.terrain-axis-note{font-size:12px;color:var(--muted)}.terrain-axis-note{margin:0}.terrain-gap-number{fill:#895020;font-weight:700}.terrain-gap-help{padding:14px 16px;border:1px solid #ead6b9;background:#fff9f0;border-radius:10px;font-size:12px;margin:14px 0}.terrain-gap-help p{margin:5px 0}.terrain-gap-help ul{padding-left:20px;margin:8px 0 0}.terrain-gap-help li{margin:6px 0}.terrain-method{margin-top:14px;margin-bottom:12px}@media(max-width:760px){.terrain-chart-card{padding:12px 8px 10px}.terrain-chart-card figcaption{display:block;padding:0 4px 8px}.terrain-chart-card figcaption span{display:block;margin-top:3px}.terrain-chart-card .axis-label{font-size:24px}.terrain-gap-help{padding:12px}.terrain-axis-note{padding:0 4px;font-size:11px}}
 </style>
 </head>
 <body>
@@ -73,20 +75,26 @@
 <p class="error" id="importError" role="alert"></p>
 <div id="recordControls" hidden><p class="record-meta" id="recordMeta"></p><div class="start-row"><div class="field"><label class="label" for="analysisStart">從紀錄的幾公里開始分析？</label><div class="unit-field"><input id="analysisStart" type="number" min="0" step="any" value="0" inputmode="decimal" aria-describedby="startHelp analysisError"><span>km</span></div><p class="help" id="startHelp">例如暖身 2 km，就填 2；分析到計畫距離為止，剩餘收操不納入。</p></div><div class="analysis-policy">所有紀錄都與<strong>目前畫面上的最新計畫</strong>比較。修改計畫會重新分析；每份紀錄分別記住上次有效的分析起點。</div></div></div>
 <p class="error" id="analysisError" role="alert"></p>
+<label class="terrain-toggle"><input type="checkbox" id="showTerrain" aria-controls="terrainPanel terrainEmpty">顯示地形對照（每 200 公尺）</label>
+<p class="help" id="terrainEmpty" role="status" hidden>請先匯入可分析的 TCX 紀錄。</p>
 <div id="analysisResults" hidden>
 <p class="result-line" id="completionStatus" aria-live="polite"></p>
 <div class="analysis-stats"><div><span class="stat-label">實際經過時間</span><strong id="actualElapsed">—</strong><small id="actualAverage">—</small></div><div><span class="stat-label">同距離計畫時間</span><strong id="matchedPlanTime">—</strong><small id="matchedDistance">—</small></div><div><span class="stat-label">實際 − 計畫</span><strong id="actualDifference">—</strong><small>正數為比計畫慢</small></div><div><span class="stat-label">移動時間</span><strong class="unknown-time">無法判定</strong><small>尚無經驗證可靠的移動／暫停計時資訊</small></div></div>
 <p class="quality-note" id="qualityNote"></p>
 <div class="legend"><span><i class="line-key base"></i>同區間計畫配速</span><span><i class="line-key"></i>實際配速（經過時間）</span><span><b class="drop-key">◆</b>2 km 區間掉速</span></div>
-<label class="terrain-toggle"><input type="checkbox" id="showTerrain" aria-controls="terrainPanel">顯示地形對照（每 200 公尺）</label>
 <svg id="actualChart" class="chart" viewBox="0 0 680 250" role="img" aria-labelledby="actualChartTitle actualChartDesc"><title id="actualChartTitle">計畫與實際每公里配速</title><desc id="actualChartDesc">詳細數字請見下方每公里表格。</desc></svg>
 <p class="caption">橫軸為從分析起點算起的公里數；配速數字變大表示更慢。最後不足 1 km 以空心圓顯示，門檻判定只使用完整公里。</p>
 <section id="terrainPanel" class="terrain-panel" aria-labelledby="terrainTitle" hidden>
 <h3 id="terrainTitle">這段路的起伏，與當時的配速</h3>
-<p class="help">上下兩圖使用相同距離軸：上圖為每 200 m 經過時間配速，下圖為邊界附近的平滑海拔。橘色底表示區間含資料缺口，不能直接歸因於地形；缺資料處不連線。</p>
+<p class="help">先看配速，再對照同一公里位置的高度變化。配速越高表示越慢；海拔越高表示位置越高。兩張圖的橫軸相同，都從你選的分析起點算起。</p>
 <p class="quality-note" id="terrainStatus"></p>
-<svg id="terrainChart" class="chart" viewBox="0 0 680 410" role="img" aria-labelledby="terrainChartTitle terrainChartDesc"></svg>
-<p class="caption">近似淨坡度＝起訖平滑海拔差 ÷ 紀錄距離差。海拔採邊界 ±25 m 的觀測中位數；同區間可能有上有下，海拔也有量測誤差。只描述同時變化，不判定原因、不換算平路等效配速。</p>
+<div class="terrain-chart-stack" id="terrainChart">
+<figure class="terrain-chart-card"><figcaption><strong>每 200 公尺配速</strong><span>分:秒／公里 · 越高越慢</span></figcaption><svg id="terrainPaceChart" class="chart" viewBox="0 0 680 210" role="img" aria-labelledby="terrainPaceChartTitle terrainPaceChartDesc"></svg><p class="terrain-axis-note">距離（公里）｜每段短線是該區間平均，包含停等</p></figure>
+<figure class="terrain-chart-card"><figcaption><strong>海拔高度</strong><span>公尺（m）· 往上表示高度增加</span></figcaption><svg id="terrainElevationChart" class="chart" viewBox="0 0 680 210" role="img" aria-labelledby="terrainElevationChartTitle terrainElevationChartDesc"></svg><p class="terrain-axis-note">距離（公里）｜斷線處沒有足夠的連續資料</p></figure>
+</div>
+<div id="terrainGapHelp" class="terrain-gap-help" hidden><strong>海拔線為什麼中斷？</strong><p>圖中編號對應以下區段。橘底表示紀錄缺口，灰底表示海拔資料不足；我們保留空白，避免畫出沒有依據的高度變化。</p><ul id="terrainGapList"></ul></div>
+<p class="caption">海拔線往上／往下，可用來對照同一位置的配速變化；兩者一起變化，仍不能直接判定原因。近似淨坡度見下方明細。</p>
+<details class="terrain-method"><summary>海拔與近似坡度怎麼算？</summary><p>海拔採邊界前後各 25 m 的觀測中位數，降低單點波動；同一連續範圍內至少需有 3 個不同距離的觀測點。缺海拔、觀測間距超過 50 m 或紀錄缺口會分開處理，不跨缺口取樣或連線，也不往外補資料。</p><p>近似淨坡度＝起訖處理後的海拔差 ÷ 紀錄距離差。正值是淨上升，負值是淨下降，不代表瞬間坡度或累積爬升；同區間可能有上有下。這是近似對照，不換算平路等效配速。</p></details>
 <details><summary>查看每 200 公尺明細與資料品質</summary><p class="help">距離從分析起點重新起算；不足 200 m 的尾段另列。橫向捲動可看完整欄位。</p><div class="table-scroll" tabindex="0" role="region" aria-label="地形與配速明細，可橫向捲動"><table><thead><tr><th scope="col">區間 km</th><th scope="col">實際 /km</th><th scope="col">海拔起→訖 m</th><th scope="col">淨高差 m</th><th scope="col">近似淨坡度 %</th><th scope="col">資料品質</th></tr></thead><tbody id="terrainRows"></tbody></table></div></details>
 </section>
 <h3 class="analysis-subtitle">三段比較</h3><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="跑後三段比較，可橫向捲動"><table><thead><tr><th scope="col">計畫分段</th><th scope="col">已比較距離</th><th scope="col">計畫配速</th><th scope="col">實際配速</th><th scope="col">至此累計差</th><th scope="col">狀態</th></tr></thead><tbody id="actualSegmentRows"></tbody></table></div>
@@ -298,19 +306,28 @@ function analyzeRun(plan,data,start){
 function csvCell(value){if(typeof value==='number'&&Number.isFinite(value))return String(value);let text=String(value??'');if(/^\s*[=+\-@]/.test(text))text="'"+text;return /[",\r\n]/.test(text)?'"'+text.replaceAll('"','""')+'"':text;}
 // 僅做距離對齊的描述性對照；不從坡度推算體力或因果。
 function analyzeTerrain(result,data){
- const altitude=data.points.filter(p=>Number.isFinite(p.a)),first=altitude[0],last=altitude[altitude.length-1];
+ // Separate altitude runs at missing samples, >50m spacing, or a core-data gap.
+ // Smoothing never borrows observations from another run.
+ const altitudeRuns=[];let run=null,previous=null;
+ for(const p of data.points){
+  if(!Number.isFinite(p.a)){run=null;previous=null;continue;}
+  const broken=previous&&(p.d-previous.d>50+1e-6||data.gaps.some(g=>(g.from<p.d-1e-6&&g.to>previous.d+1e-6)||(Math.abs(g.to-g.from)<1e-6&&Math.abs(previous.d-g.from)<1e-6&&Math.abs(p.d-g.to)<1e-6)));
+  if(!run||broken){run=[];altitudeRuns.push(run);}run.push(p);previous=p;
+ }
  function elevationAt(km){
-  const d=km*1000;if(!first||d<first.d-1e-6||d>last.d+1e-6)return null;
-  if(data.gaps.some(g=>d>g.from+1e-6&&d<g.to-1e-6))return null;
-  const near=altitude.filter(p=>Math.abs(p.d-d)<=25+1e-6).map(p=>p.a).sort((a,b)=>a-b);
-  if(!near.length)return null;const i=Math.floor(near.length/2);return near.length%2?near[i]:(near[i-1]+near[i])/2;
+  const d=km*1000,run=altitudeRuns.find(r=>d>=r[0].d-1e-6&&d<=r[r.length-1].d+1e-6);
+  if(!run)return {value:null,run:null};
+  const near=run.filter(p=>Math.abs(p.d-d)<=25+1e-6),unique=new Set(near.map(p=>p.d));
+  if(unique.size<3)return {value:null,run:null};
+  const values=near.map(p=>p.a).sort((a,b)=>a-b),i=Math.floor(values.length/2);
+  return {value:values.length%2?values[i]:(values[i-1]+values[i])/2,run};
  }
  const rows=[],count=Math.ceil(result.length/.2-1e-9);
  for(let i=0;i<count;i++){
-  const from=i*.2,to=Math.min((i+1)*.2,result.length),a=result.start+from,b=result.start+to,ea=elevationAt(a),eb=elevationAt(b);
+  const from=i*.2,to=Math.min((i+1)*.2,result.length),a=result.start+from,b=result.start+to,ha=elevationAt(a),hb=elevationAt(b),ea=ha.value,eb=hb.value,continuous=ha.run!==null&&ha.run===hb.run;
   let pace=null,timeError='';try{pace=(timeAt(b,data)-timeAt(a,data))/(to-from);if(!(pace>0)){pace=null;timeError='區間時間無效';}}catch(error){timeError=error.message;}
-  const gap=data.gaps.some(g=>g.from<b*1000-1e-6&&g.to>=a*1000-1e-6),delta=ea===null||eb===null?null:eb-ea,grade=delta===null?null:delta/((to-from)*1000)*100;
-  const notes=[];if(delta===null)notes.push('海拔覆蓋不足／邊界有缺口');if(timeError)notes.push('配速無法定位');if(gap)notes.push('含紀錄缺口：可能停等或漏採樣，不能歸因');
+  const gap=data.gaps.some(g=>g.from<b*1000-1e-6&&g.to>=a*1000-1e-6),delta=ea===null||eb===null||!continuous?null:eb-ea,grade=delta===null?null:delta/((to-from)*1000)*100;
+  const notes=[];if(delta===null)notes.push(ea!==null&&eb!==null?'海拔區間不連續，無法計算坡度':'海拔資料缺口／樣本不足，無法計算坡度');if(timeError)notes.push('配速無法定位');if(gap)notes.push('含紀錄缺口：可能停等或漏採樣，不能歸因');
   rows.push({from,to,pace,ea,eb,delta,grade,gap,note:notes.join('；')||'可對照，原因仍無法單獨判定'});
  }
  return rows;
@@ -359,32 +376,37 @@ function renderAnalysis(result,data){
 function renderTerrain(result){
  const rows=result.terrain;$('terrainPanel').hidden=!$('showTerrain').checked;
  const valid=rows.filter(r=>r.delta!==null).length,gaps=rows.filter(r=>r.gap).length;
- $('terrainStatus').textContent=valid?'共 '+rows.length+' 段，其中 '+valid+' 段有起訖海拔可供對照；'+gaps+' 段含紀錄缺口。海拔與配速同時變化不代表因果。':'此分析範圍缺少足夠的海拔覆蓋，地形無法判定；原有配速分析仍可使用。';
- $('terrainRows').replaceChildren();for(const r of rows)addRow($('terrainRows'),[kmText(r.from)+'–'+kmText(r.to)+(r.to-r.from<.2-1e-8?'（尾段）':''),r.pace===null?'—':paceText(r.pace),(r.ea===null?'—':r.ea.toFixed(1))+' → '+(r.eb===null?'—':r.eb.toFixed(1)),r.delta===null?'—':signedDecimal(r.delta),r.grade===null?'—':signedDecimal(r.grade),r.note]);
+ $('terrainStatus').textContent=valid?'已切分 '+rows.length+' 段；'+gaps+' 段含紀錄缺口。海拔線中斷的位置已編號，原因見下方說明。':'海拔資料不足，無法畫出可靠的海拔走勢；可計算的配速仍會顯示。';
+ $('terrainRows').replaceChildren();for(const r of rows)addRow($('terrainRows'),[kmText(r.from)+'–'+kmText(r.to)+(r.to-r.from<.2-1e-8?'（尾段 '+Math.round((r.to-r.from)*1000)+' m）':''),r.pace===null?'無法計算':paceText(r.pace),(r.ea===null?'無資料':r.ea.toFixed(1))+' → '+(r.eb===null?'無資料':r.eb.toFixed(1)),r.delta===null?'無法計算':signedDecimal(r.delta),r.grade===null?'無法計算':signedDecimal(r.grade),r.note]);
  drawTerrainChart(result);
 }
-function signedDecimal(value){return (value>0?'+':'')+value.toFixed(1);}
+function signedDecimal(value){const rounded=Math.round(Math.abs(value)*10+1e-8)/10;return (rounded===0?'':value>0?'+':'-')+rounded.toFixed(1);}
 function drawTerrainChart(result){
- const rows=result.terrain,w=680,left=62,right=18,x=k=>left+k/result.length*(w-left-right);
- let svg='<title id="terrainChartTitle">每 200 公尺配速與平滑海拔對照</title><desc id="terrainChartDesc">上下兩圖共用距離軸，橘底表示含紀錄缺口。配速越高越慢；海拔越高代表高度越高。缺失資料不連線，完整數字與品質見明細表。</desc>';
- for(const r of rows)if(r.gap)svg+=`<rect x="${x(r.from)}" y="22" width="${x(r.to)-x(r.from)}" height="346" fill="#fff0dc"/>`;
- for(const panel of [{top:32,bottom:170,label:'200 m 配速 /km',values:rows.map(r=>r.pace).filter(Number.isFinite),color:'#176b55',key:'pace',pace:true},{top:235,bottom:365,label:'平滑海拔 m',values:rows.flatMap(r=>[r.ea,r.eb]).filter(Number.isFinite),color:'#a56a36',key:'altitude'}]){
-  svg+=`<text x="${left}" y="${panel.top-12}" class="axis-label">${panel.label}</text>`;
-  if(!panel.values.length){svg+=`<text x="${left+15}" y="${panel.top+45}" class="axis-label">無足夠資料，請查看品質提示</text>`;continue;}
-  const low=Math.min(...panel.values),high=Math.max(...panel.values),pad=Math.max(panel.pace?15:3,(high-low)*.1),min=low-pad,max=high+pad,y=v=>panel.bottom-(v-min)/(max-min)*(panel.bottom-panel.top);
-  for(let j=0;j<3;j++){const v=min+(max-min)*j/2;svg+=`<line x1="${left}" y1="${y(v)}" x2="${w-right}" y2="${y(v)}" stroke="#e5ebe6"/><text x="${left-8}" y="${y(v)+4}" text-anchor="end" class="axis-label">${panel.pace?paceText(v):Math.round(v)}</text>`;}
-  if(panel.pace){for(const r of rows)if(r.pace!==null)svg+=`<line x1="${x(r.from)}" y1="${y(r.pace)}" x2="${x(r.to)}" y2="${y(r.pace)}" stroke="${panel.color}" stroke-width="2.5"/><circle cx="${x((r.from+r.to)/2)}" cy="${y(r.pace)}" r="2.5" fill="${panel.color}"/>`;}
-  else for(const r of rows)if(r.ea!==null&&r.eb!==null&&!r.gap)svg+=`<line x1="${x(r.from)}" y1="${y(r.ea)}" x2="${x(r.to)}" y2="${y(r.eb)}" stroke="${panel.color}" stroke-width="2.5"/>`;
+ const rows=result.terrain,w=680,left=64,right=22,top=30,bottom=160,x=k=>left+k/result.length*(w-left-right),issues=[];
+ for(const r of rows)if(r.gap||r.delta===null){const kind=r.gap?'紀錄缺口':'海拔資料不足',prev=issues[issues.length-1];if(prev&&prev.kind===kind&&Math.abs(prev.to-r.from)<1e-8)prev.to=r.to;else issues.push({from:r.from,to:r.to,kind});}
+ $('terrainGapList').replaceChildren();for(const [i,g]of issues.entries()){const li=document.createElement('li');li.textContent=(i+1)+'｜'+kmText(g.from)+'–'+kmText(g.to)+' km：'+(g.kind==='紀錄缺口'?'紀錄不完整，海拔線暫不連接；配速若可計算，仍包含這段經過時間。':'海拔缺失或樣本不足，該段海拔線與坡度不顯示。');$('terrainGapList').append(li);}
+ $('terrainGapHelp').hidden=!issues.length;
+ for(const panel of [{id:'terrainPaceChart',title:'每 200 公尺經過時間配速',values:rows.map(r=>r.pace).filter(Number.isFinite),color:'#176b55',pace:true},{id:'terrainElevationChart',title:'海拔高度',values:rows.flatMap(r=>[r.ea,r.eb]).filter(Number.isFinite),color:'#a56a36'}]){
+  let svg=`<title id="${panel.id}Title">${panel.title}</title><desc id="${panel.id}Desc">橫軸是分析起點後的公里數。編號與底色對應下方的缺口說明。${panel.pace?'縱軸為分秒每公里，越高表示越慢；每段短線代表200公尺區間平均。':'縱軸為公尺，線往上代表高度增加；不跨資料缺口連線。'}</desc>`;
+  let previousLabelX=-Infinity,previousLabelY=19;
+  for(const [i,g]of issues.entries()){const labelX=x((g.from+g.to)/2),labelY=labelX-previousLabelX<36&&previousLabelY===19?51:19;svg+=`<rect x="${x(g.from)}" y="${top}" width="${x(g.to)-x(g.from)}" height="${bottom-top}" fill="${g.kind==='紀錄缺口'?'#fff0dc':'#edf0ef'}"/><text x="${labelX}" y="${labelY}" text-anchor="middle" class="axis-label terrain-gap-number">${i+1}</text>`;previousLabelX=labelX;previousLabelY=labelY;}
+  if(panel.values.length){
+   const low=Math.min(...panel.values),high=Math.max(...panel.values),step=panel.pace?(high-low>360?180:high-low>120?60:30):(high-low>80?40:high-low>30?20:5),min=Math.max(0,Math.floor((low-(panel.pace?15:3))/step)*step),max=Math.max(min+step,Math.ceil((high+(panel.pace?15:3))/step)*step),y=v=>bottom-(v-min)/(max-min)*(bottom-top);
+   for(let j=0;j<3;j++){const v=min+(max-min)*j/2;svg+=`<line x1="${left}" y1="${y(v)}" x2="${w-right}" y2="${y(v)}" stroke="#dce4df"/><text x="${left-10}" y="${y(v)+4}" text-anchor="end" class="axis-label">${panel.pace?paceText(v):Math.round(v)}</text>`;}
+   if(panel.pace){for(const r of rows)if(r.pace!==null)svg+=`<line x1="${x(r.from)}" y1="${y(r.pace)}" x2="${x(r.to)}" y2="${y(r.pace)}" stroke="${panel.color}" stroke-width="2.5"/><circle cx="${x((r.from+r.to)/2)}" cy="${y(r.pace)}" r="2.5" fill="${panel.color}"/>`;}
+   else for(const r of rows)if(r.delta!==null&&!r.gap)svg+=`<line x1="${x(r.from)}" y1="${y(r.ea)}" x2="${x(r.to)}" y2="${y(r.eb)}" stroke="${panel.color}" stroke-width="2.5"/>`;
+  }else svg+=`<text x="${left+15}" y="95" class="axis-label">資料不足，無法繪圖</text>`;
+  for(let j=0;j<5;j++){const k=result.length*j/4;svg+=`<text x="${x(k)}" y="192" text-anchor="${j===4?'end':'middle'}" class="axis-label">${Number(k.toFixed(2))}</text>`;}
+  $(panel.id).innerHTML=svg;
  }
- for(let j=0;j<5;j++){const k=result.length*j/4;svg+=`<text x="${x(k)}" y="395" text-anchor="${j===4?'end':'middle'}" class="axis-label">${Number(k.toFixed(2))}${j===4?' km':''}</text>`;}
- $('terrainChart').innerHTML=svg;
 }
 function refreshAnalysis(){
  activeAnalysis=null;$('analysisResults').hidden=true;$('exportAnalysis').disabled=true;$('analysisError').textContent='';$('analysisStart').setAttribute('aria-invalid','false');
- if(!selectedParsed||!selectedRecord)return;
+ $('terrainEmpty').hidden=!$('showTerrain').checked;$('terrainPanel').hidden=true;
+ if(!selectedParsed||!selectedRecord){$('terrainEmpty').textContent='請先匯入可分析的 TCX 紀錄。';return;}
  const text=$('analysisStart').value.trim(),start=text===''?NaN:Number(text);
- try{activeAnalysis=analyzeRun(readPlan(),selectedParsed,start);renderAnalysis(activeAnalysis,selectedParsed);$('analysisResults').hidden=false;$('exportAnalysis').disabled=false;}
- catch(error){$('analysisError').textContent=error.message;$('analysisStart').setAttribute('aria-invalid',String(!Number.isFinite(start)||start<0||start>=selectedParsed.distance));}
+ try{activeAnalysis=analyzeRun(readPlan(),selectedParsed,start);renderAnalysis(activeAnalysis,selectedParsed);$('analysisResults').hidden=false;$('exportAnalysis').disabled=false;$('terrainEmpty').hidden=true;}
+ catch(error){$('analysisError').textContent=error.message;$('terrainEmpty').textContent='目前沒有有效的分析結果，請先修正上方輸入或紀錄問題。';$('analysisStart').setAttribute('aria-invalid',String(!Number.isFinite(start)||start<0||start>=selectedParsed.distance));}
 }
 async function persistStart(record,start){const updated={...record,start};try{await dbWrite(updated);updated.persisted=true;const index=records.findIndex(r=>r.id===record.id);if(index>=0)records[index]=updated;if(selectedRecord?.id===updated.id)selectedRecord=updated;$('importStatus').textContent='已保存此紀錄的分析起點。所有紀錄依目前最新計畫比較。';}catch{const existing=records.find(r=>r.id===record.id);if(existing)existing.start=start;$('importStatus').textContent='分析起點未成功保存，這次畫面可用；重新整理可能恢復先前起點。';}}
 async function importFile(file){
@@ -401,7 +423,7 @@ $('tcxFile').addEventListener('change',()=>{const file=$('tcxFile').files[0];if(
 $('recordSelect').addEventListener('change',()=>{clearTimeout(startSaveTimer);$('importError').textContent='';selectRecord($('recordSelect').value);$('importStatus').textContent=selectedRecord?.persisted?'已選取本機保存的紀錄，依最新計畫分析。':'此紀錄未成功保存，請保留原始檔。';});
 $('analysisStart').addEventListener('input',()=>{clearTimeout(startSaveTimer);refreshAnalysis();if(activeAnalysis&&selectedRecord){const record=selectedRecord,start=activeAnalysis.start;startSaveTimer=setTimeout(()=>persistStart(record,start),200);}});
 $('deleteRecord').addEventListener('click',async()=>{if(!selectedRecord)return;clearTimeout(startSaveTimer);const record=selectedRecord;try{await dbDelete(record.id);records=records.filter(r=>r.id!==record.id);selectRecord(records[0]?.id||'');$('importError').textContent='';$('importStatus').textContent='已刪除此瀏覽器內的紀錄、分析起點與中繼資料；電腦上的原始檔未更動。';}catch{$('importError').textContent='刪除未成功，紀錄仍保留。';}});
-$('showTerrain').addEventListener('change',()=>{if(activeAnalysis)renderTerrain(activeAnalysis);});
+$('showTerrain').addEventListener('change',()=>{if(activeAnalysis)renderTerrain(activeAnalysis);else refreshAnalysis();});
 $('exportAnalysis').addEventListener('click',()=>{refreshAnalysis();if(!activeAnalysis)return;const csv=analysisCSV(activeAnalysis,selectedRecord,selectedParsed,$('showTerrain').checked),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download='steady-run-analysis.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 document.addEventListener('input',event=>{if(numericFields.includes(event.target.id)||event.target.id==='note')refreshAnalysis();});
 document.addEventListener('change',event=>{if(event.target.id==='distancePreset')refreshAnalysis();});
