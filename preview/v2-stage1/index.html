@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="自訂跑步距離與前中後三段配速，查看計畫和目標的時間差。所有有效設定自動保存在本機。">
+<title>穩穩跑 V2｜三段配速規劃・第一階段</title>
+<style>
+:root{--bg:#f4f5f0;--card:#fff;--ink:#203b36;--muted:#5b6f69;--line:#dce4de;--teal:#176b55;--lime:#e1edac;--orange:#ad5128;--soft:#eef4ef;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif;line-height:1.6}button,input,select,textarea{font:inherit}button,a,input,select,textarea{touch-action:manipulation}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #a66513;outline-offset:3px}button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:9px 15px;font-weight:700}button:hover{background:var(--soft)}button.primary{background:var(--teal);color:white;border-color:var(--teal)}button.primary:hover{background:#10533f}button:disabled{cursor:default;opacity:.5}a{color:var(--teal)}.wrap{max-width:1240px;padding:0 32px;margin:auto}.topbar{border-bottom:1px solid var(--line);background:rgba(255,255,255,.75)}.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:74px;gap:12px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:19px}.logo{width:36px;height:36px;border-radius:11px;background:var(--teal);color:var(--lime);display:grid;place-items:center}.topnote{font-size:12px;color:var(--muted)}.hero{display:flex;align-items:center;justify-content:space-between;padding:35px 0 27px;gap:24px}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--teal);margin:0 0 7px}.hero h1{font-size:clamp(26px,3.2vw,38px);letter-spacing:-.04em;line-height:1.25;margin:0 0 10px}.hero p{margin:0;color:var(--muted);font-size:14px}.distance-mark{flex:0 0 150px;border-left:1px solid var(--line);padding-left:25px;font-size:12px;color:var(--muted)}.distance-mark strong{font-size:36px;display:block;color:var(--teal);letter-spacing:-.06em;line-height:1.2}.main-grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}.controls{padding:23px}.section-head{display:flex;align-items:center;gap:9px;margin-bottom:18px}.number{font-size:11px;border-radius:50%;background:var(--soft);width:25px;height:25px;display:grid;place-items:center;color:var(--teal);font-weight:800}h2{font-size:17px;line-height:1.4;margin:0}h3{font-size:15px;margin:0}.label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}select,input[type=number],input[type=text],textarea{background:#fff;border:1px solid #bacbc1;border-radius:9px;color:var(--ink);width:100%;padding:10px 11px;min-height:44px}input[aria-invalid=true]{border:2px solid #b13e24}.field{margin:0 0 17px}.time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.unit-field{position:relative}.unit-field input{padding-right:40px}.unit-field span{position:absolute;right:12px;top:11px;font-size:13px;color:var(--muted)}.help{font-size:12px;color:var(--muted);margin:6px 0 0}.divider{border:0;border-top:1px solid var(--line);margin:23px 0}.presets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}.presets button{font-size:12px;padding:9px 5px}.presets button[aria-pressed=true]{background:var(--soft);border-color:var(--teal);color:var(--teal)}.range-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.range-value{font-size:13px;color:var(--teal);font-weight:800;white-space:nowrap}input[type=range]{width:100%;accent-color:var(--teal);margin:6px 0;min-height:28px}.range-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.scenario-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}.scenario-fields .label{font-size:12px}.error{color:#a3321d;background:#fff0e9;border:1px solid #e3b4a2;border-radius:10px;padding:12px;font-size:13px;margin:0 0 14px}.error:empty{display:none}.right-col{display:grid;gap:18px}.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.stat{padding:19px 20px;min-width:0}.stat.main{background:var(--teal);color:white;border-color:var(--teal)}.stat-label{font-size:12px;color:var(--muted);display:block;margin-bottom:7px}.main .stat-label{color:#d8eade}.stat strong{font-size:clamp(25px,2.7vw,34px);letter-spacing:-.04em;line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}.stat small{display:block;font-size:11px;margin-top:7px;color:var(--muted)}.main small{color:#d8eade}.stat-unit{font-size:12px;font-weight:400;letter-spacing:0}.result-panel{padding:23px 25px}.result-head{display:flex;justify-content:space-between;align-items:start;gap:12px}.tag{background:var(--soft);font-size:11px;padding:4px 9px;border-radius:6px;white-space:nowrap;color:var(--teal)}.result-line{font-size:14px;margin:16px 0 12px;padding:12px 14px;background:var(--soft);border-left:3px solid var(--teal);border-radius:0 8px 8px 0}.result-line.late{background:#fff5ee;border-color:var(--orange);color:#824326}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:15px 0 5px}.legend span{display:flex;align-items:center;gap:6px}.line-key{display:inline-block;width:19px;border-top:3px solid var(--teal)}.line-key.base{border-color:#8b9691;border-top-style:dashed}.chart{display:block;width:100%;height:auto;overflow:visible}.axis-label{font-size:11px;fill:var(--muted)}.caption{font-size:11px;color:var(--muted);margin:0}.table-panel{padding:22px 25px}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;margin-top:13px;font-variant-numeric:tabular-nums}th,td{padding:10px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:11px;font-weight:600}th:first-child,td:first-child{text-align:left}tbody tr:last-child{background:var(--soft);font-weight:800}tbody tr:last-child td{border-bottom:0}.plus{color:var(--orange)}.minus{color:var(--teal)}.table-actions{margin-top:15px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.table-actions p{font-size:11px;color:var(--muted);margin:0}.table-actions button{font-size:12px;padding:6px 11px}.save-panel{margin:22px 0 18px;padding:22px 25px;display:grid;grid-template-columns:1fr 1fr;gap:25px}.save-panel h2{margin-bottom:10px}textarea{resize:vertical;min-height:79px;font-size:13px}.save-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.save-actions button{font-size:12px}.status{font-size:12px;color:var(--muted);min-height:20px;margin:8px 0 0}.notes{font-size:12px;color:var(--muted);border-left:1px solid var(--line);padding-left:25px}.notes p{margin:5px 0 12px}.notes strong{color:var(--ink)}details{border:1px solid var(--line);background:#fff;border-radius:12px;padding:15px 20px;margin-bottom:20px;font-size:13px}summary{cursor:pointer;font-weight:700}details p{color:var(--muted)}.formula{padding:12px 15px;background:var(--soft);border-radius:8px;line-height:1.9}footer{display:flex;justify-content:space-between;gap:15px;font-size:11px;color:var(--muted);padding:0 0 28px} [hidden]{display:none!important}
+@media(max-width:1050px){.wrap{padding:0 22px}.main-grid{grid-template-columns:300px minmax(0,1fr);gap:16px}.stat{padding:16px 13px}.stat strong{font-size:26px}.stat-grid{gap:9px}.result-panel,.table-panel{padding:20px}.controls{padding:20px}}
+@media(max-width:760px){.wrap{padding:0 17px}.topbar .wrap{min-height:62px}.topnote{max-width:120px;text-align:right;font-size:10px}.hero{padding:28px 0 22px}.hero h1{font-size:29px}.hero p{font-size:13px}.distance-mark{display:none}.main-grid{grid-template-columns:1fr}.controls{padding:21px}.right-col{gap:14px}.stat-grid{gap:8px}.stat{padding:15px 11px}.stat strong{font-size:25px}.stat small{font-size:10px}.stat-label{font-size:11px}.result-panel,.table-panel{padding:20px 16px}.result-head{gap:7px}.tag{font-size:10px}.save-panel{grid-template-columns:1fr;gap:15px;padding:21px}.notes{border-left:0;border-top:1px solid var(--line);padding:16px 0 0}.scenario-fields{gap:12px}.hero h1 br{display:none}footer{font-size:10px}.result-line{font-size:13px}}
+@media(max-width:760px){.chart .axis-label{font-size:22px}}
+@media(max-width:370px){.stat strong{font-size:21px}.stat{padding:14px 8px}.stat-grid{gap:5px}.brand{font-size:17px}}
+@media print{body{background:white}.wrap{max-width:none;padding:0}.topbar,.controls,.save-actions,.table-actions,details,footer{display:none}.hero{padding:10px 0 20px}.main-grid{display:block}.right-col{gap:14px}.panel{break-inside:avoid}.save-panel{margin-top:16px}.notes{font-size:11px}textarea{border:0}.stat.main{background:white;color:var(--ink)}.main .stat-label,.main small{color:var(--muted)}}
+
+.phase-strip{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 22px;font-size:12px;color:var(--muted)}
+.main-grid>*{min-width:0}.time-row,.scenario-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.table-scroll{max-width:100%}
+.right-col{grid-template-columns:minmax(0,1fr)}.right-col>*{min-width:0}.stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.table-swipe{display:none}@media(max-width:760px){.table-swipe{display:block;margin-top:10px}}
+.phase-strip span{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff}.phase-strip .phase-current{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+.pace-inputs{display:grid;gap:14px;margin:15px 0}.pace-entry{min-width:0;border:1px solid var(--line);border-radius:12px;margin:0;padding:10px 13px 14px}.pace-entry legend{font-size:13px;font-weight:700;padding:0 5px}.segment-dot{font-size:10px;border-radius:5px;background:var(--teal);color:#fff;padding:2px 5px;margin-right:6px}.segment-dot.middle{background:#537968}.segment-dot.late{background:#897046}.segment-range{margin:0 0 9px;overflow-wrap:anywhere}
+.field-error{font-size:12px;color:#a3321d;margin:6px 0 0}.field-error:empty{display:none}.rule-note,.precision-note{padding:11px 12px;border-radius:8px;background:var(--soft)}.controls .scenario-fields .field{margin-bottom:2px}.table-scroll:focus-visible{outline:3px solid #a66513;outline-offset:3px}.table-panel tbody tr:last-child{font-weight:600}.table-panel tbody tr:last-child td{border-bottom:0}.chart{margin-bottom:5px}.save-panel .status{font-weight:700;color:var(--teal)}
+@media(max-width:760px){.phase-strip{gap:7px;font-size:11px}.phase-strip span{padding:8px 10px}.result-head{flex-wrap:wrap}.stat strong{font-size:24px}.phase-strip{margin-bottom:16px}}
+@media(max-width:370px){.stat strong{font-size:20px}.stat-unit{font-size:10px}.brand{gap:7px}.brand>span:last-child{font-size:9px!important}}
+@media print{.phase-strip{display:none}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap"><div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 24h8l5-9 4 5h5M8 16l6-6 5 3 5-2M15 17l-5 5"/><circle cx="20" cy="6" r="2" fill="currentColor" stroke="none"/></svg></span>穩穩跑<span style="font-size:11px;font-weight:500;color:var(--muted)">PACE PLANNER</span></div><span class="topnote">跑前想清楚，路上更有數。</span></div></header>
+<main class="wrap">
+<section class="hero"><div><p class="eyebrow">YOUR RUN, YOUR RHYTHM · V2</p><h1>把目標，拆成每一公里。</h1><p>直接安排三段配速，看看你的計畫和目標差多少。</p></div><div class="distance-mark"><span id="distanceName">半程馬拉松</span><strong id="distanceMark">21.0975</strong>公里的配速規劃</div></section>
+<div class="phase-strip" aria-label="開發階段"><span class="phase-current">01 跑前規劃 · 可操作</span><span>02 跑後 TCX 分析 · 第二階段待實作</span></div>
+<div class="main-grid">
+<form class="panel controls" id="planForm" novalidate>
+<div class="section-head"><span class="number">01</span><h2>設定這次的目標</h2></div>
+<div class="field"><label class="label" for="distancePreset">常見距離</label><select id="distancePreset"><option value="5">5K · 5 公里</option><option value="10">10K · 10 公里</option><option value="21.0975" selected>半馬 · 21.0975 公里</option><option value="42.195">全馬 · 42.195 公里</option><option value="custom">其他自訂</option></select></div>
+<div class="field"><label class="label" for="distance">距離（可直接修改）</label><div class="unit-field"><input id="distance" type="number" min="0.1" max="100" step="0.0001" value="21.0975" inputmode="decimal" aria-describedby="distanceHelp distanceError"><span>km</span></div><p class="help" id="distanceHelp">暫採 0.1–100 km，最多四位小數。</p><p class="field-error" id="distanceError"></p></div>
+<div class="field"><span class="label" id="timeLabel">目標完賽時間</span><div class="time-row" role="group" aria-labelledby="timeLabel"><div class="unit-field"><input id="hours" type="number" min="0" max="12" step="1" value="2" aria-label="目標小時" aria-describedby="targetError" inputmode="numeric"><span>小時</span></div><div class="unit-field"><input id="minutes" type="number" min="0" max="59" step="1" value="0" aria-label="目標分鐘" aria-describedby="targetError" inputmode="numeric"><span>分鐘</span></div></div><p class="field-error" id="targetError"></p></div>
+<p class="help rule-note">改距離會按原比例調整分段，保留配速與目標時間。只改目標時間，也不會改動你的配速。</p>
+<hr class="divider">
+<div class="section-head"><span class="number">02</span><h2>安排前、中、後三段</h2></div>
+<div class="scenario-fields"><div class="field"><label class="label" for="earlyKm">前段終點</label><div class="unit-field"><input id="earlyKm" type="number" min="0" step="any" value="5.274375" inputmode="decimal" aria-describedby="segmentsError"><span>km</span></div></div><div class="field"><label class="label" for="fadeKm">後段起點</label><div class="unit-field"><input id="fadeKm" type="number" min="0" step="any" value="15.823125" inputmode="decimal" aria-describedby="segmentsError"><span>km</span></div></div></div><p class="field-error" id="segmentsError"></p>
+<p class="help" id="segmentHint">示範比例：前 25%／中 50%／後 25%，可自行修改。</p>
+<div class="pace-inputs">
+<fieldset class="pace-entry"><legend><span class="segment-dot" aria-hidden="true">前</span>前段配速</legend><p class="help segment-range" id="earlyRange">0–5.274375 km</p><div class="time-row"><div class="unit-field"><input id="earlyMin" type="number" min="0" step="1" value="5" aria-label="前段配速分鐘" aria-describedby="earlyPaceError" inputmode="numeric"><span>分</span></div><div class="unit-field"><input id="earlySec" type="number" min="0" max="59" step="1" value="41" aria-label="前段配速秒數" aria-describedby="earlyPaceError" inputmode="numeric"><span>秒</span></div></div><p class="field-error" id="earlyPaceError"></p></fieldset>
+<fieldset class="pace-entry"><legend><span class="segment-dot middle" aria-hidden="true">中</span>中段配速</legend><p class="help segment-range" id="middleRange">5.274375–15.823125 km</p><div class="time-row"><div class="unit-field"><input id="middleMin" type="number" min="0" step="1" value="5" aria-label="中段配速分鐘" aria-describedby="middlePaceError" inputmode="numeric"><span>分</span></div><div class="unit-field"><input id="middleSec" type="number" min="0" max="59" step="1" value="41" aria-label="中段配速秒數" aria-describedby="middlePaceError" inputmode="numeric"><span>秒</span></div></div><p class="field-error" id="middlePaceError"></p></fieldset>
+<fieldset class="pace-entry"><legend><span class="segment-dot late" aria-hidden="true">後</span>後段配速</legend><p class="help segment-range" id="lateRange">15.823125–21.0975 km</p><div class="time-row"><div class="unit-field"><input id="lateMin" type="number" min="0" step="1" value="5" aria-label="後段配速分鐘" aria-describedby="latePaceError" inputmode="numeric"><span>分</span></div><div class="unit-field"><input id="lateSec" type="number" min="0" max="59" step="1" value="41" aria-label="後段配速秒數" aria-describedby="latePaceError" inputmode="numeric"><span>秒</span></div></div><p class="field-error" id="latePaceError"></p></fieldset>
+</div>
+<p class="help">每段均輸入「分、秒／公里」。目標與計畫可以不同，系統會保留你的安排並顯示差距。</p>
+<p id="formError" class="error" role="alert"></p>
+<button type="button" id="reset" style="width:100%;margin-top:12px">恢復半馬 2 小時示範</button>
+<p class="help">有效設定即時重算，並自動儲存到此瀏覽器。</p>
+</form>
+<section class="right-col" id="results" aria-label="三段配速規劃結果">
+<div class="stat-grid"><article class="panel stat main"><span class="stat-label">目標平均配速</span><strong id="basePace">5:41</strong><span class="stat-unit"> /km</span><small>由目標時間與距離換算</small></article><article class="panel stat"><span class="stat-label">三段計畫完成時間</span><strong id="finishTime">1:59:54</strong><small id="averagePace">計畫平均 5:41 /km</small></article><article class="panel stat"><span class="stat-label">計畫與目標的差距</span><strong id="timeDiff">−0:06</strong><small id="diffLabel">比目標時間提早</small></article></div>
+<article class="panel result-panel"><div class="result-head"><h2>三段節奏，由你決定。</h2><span class="tag">跑前計畫</span></div><p id="resultSentence" class="result-line" aria-live="polite"></p><p class="help precision-note" id="precisionNote"></p><div class="legend"><span><i class="line-key base"></i>目標平均配速</span><span><i class="line-key"></i>三段計畫配速</span></div><svg id="paceChart" class="chart" viewBox="0 0 680 235" role="img" aria-labelledby="chartTitle chartDesc"><title id="chartTitle">目標與三段計畫配速比較</title><desc id="chartDesc">橫軸為公里數，縱軸為每公里所需時間。</desc></svg><p class="caption">縱軸越高代表每公里花費時間越多、速度越慢。這是你的配速計畫，並非實測或預測。</p></article>
+<article class="panel table-panel"><div class="result-head"><h2>每一段，要花多少時間？</h2><span class="tag">依輸入的整秒配速計算</span></div><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="三段安排表，可橫向捲動"><table><caption class="help" style="text-align:left;padding-top:6px">三段配速、距離與所需時間</caption><thead><tr><th scope="col">分段／範圍</th><th scope="col">距離 km</th><th scope="col">配速 /km</th><th scope="col">此段時間</th></tr></thead><tbody id="segmentRows"></tbody></table></div></article>
+<article class="panel table-panel"><div class="result-head"><h2>分段檢查，把時間差看清楚。</h2><span class="tag">含三段交界與終點</span></div><p class="help table-swipe">表格可左右捲動，查看完整數值。</p><div class="table-scroll" tabindex="0" role="region" aria-label="累計時間表，可橫向捲動"><table><caption class="help" style="text-align:left;padding-top:6px">每 5 公里、三段交界與終點的累計時間</caption><thead><tr><th scope="col">檢查點</th><th scope="col">目標累計</th><th scope="col">計畫累計</th><th scope="col">時間差</th></tr></thead><tbody id="splitRows"></tbody></table></div><p class="caption" style="margin-top:14px">先以完整精度計算，再將各欄位取整秒顯示。各段時間或差距分別取整，可能有 1 秒顯示差異。</p></article>
+</section>
+</div>
+<section class="panel save-panel"><div><h2>跑前筆記與自動儲存</h2><label class="label" for="note">跑前筆記 <span style="font-weight:400;color:var(--muted)">（選填，最多 120 字）</span></label><textarea id="note" maxlength="120" placeholder="例如：這次想比較三段都穩定，或前段保守一些的差別。" aria-describedby="noteError"></textarea><p class="field-error" id="noteError"></p><p class="status" id="saveStatus" role="status">有效設定會自動保存在此瀏覽器。</p><p class="help">僅保留最新一份有效計畫；無效輸入不會覆蓋已存設定。清除網站資料可能造成計畫遺失，不會跨裝置同步。</p></div><aside class="notes"><strong>目標和計畫是兩件事</strong><p>目標時間用來比較；三段配速是你真正安排的節奏。系統不會為了湊到目標，偷偷調整你輸入的配速。</p><strong>目前可用：跑前規劃</strong><p>第二階段才會加入 TCX 匯入、跑後比較及分析 CSV。此版沒有讀取手錶或跑步紀錄，也不預測疲勞；停等、坡度、天氣與補給未納入。</p></aside></section>
+<details><summary>想知道怎麼算？查看計算方式</summary><p>配速全部以秒／公里計算。前、中、後三段均需有正的距離；任何跨越分段邊界的區間，會依重疊距離逐段加總。</p><div class="formula">目標平均配速 ＝ 目標總秒數 ÷ 全程公里數<br>計畫總時間 ＝ 前段距離 × 前段配速 ＋ 中段距離 × 中段配速 ＋ 後段距離 × 後段配速<br>時間差 ＝ 計畫總時間 − 目標總時間（正數為慢於目標）<br>目標平均配速可有小數秒；三段配速使用你輸入的整數秒。</div><p>半馬 2 小時的目標平均配速約為 341.273 秒/km，顯示 5:41/km。三段若都輸入 5:41，計畫使用 341 秒/km，總時間約為 1:59:54，與目標差約 −0:06。這是正常的精度差異。</p><p>暫採的建議預設：新示範分段為前 25%／中 50%／後 25%；距離 0.1–100 km、最多四位小數。分段可自行修改，切換距離時保留修改後的比例。</p></details>
+</main>
+<footer class="wrap"><span>穩穩跑 · V2 第一階段驗收版</span><span>單檔 HTML / CSS / JavaScript · 本機自動儲存</span></footer>
+
+<script>
+'use strict';
+// 純計算函式與畫面／儲存分開，便於驗收。內部單位：秒、公里。
+const STORAGE_KEY='steady-run-plan-v2';
+const DEFAULT={distance:21.0975,hours:2,minutes:0,earlyKm:5.274375,fadeKm:15.823125,earlyMin:5,earlySec:41,middleMin:5,middleSec:41,lateMin:5,lateSec:41,note:''};
+const numericFields=['distance','hours','minutes','earlyKm','fadeKm','earlyMin','earlySec','middleMin','middleSec','lateMin','lateSec'];
+const $=id=>document.getElementById(id);
+const paceGroups=['early','middle','late'];
+let lastValidDistance=DEFAULT.distance;
+let storageIsAvailable=true;
+
+function validate(p){
+ const errors={};
+ if(!Number.isFinite(p.distance)||p.distance<.1||p.distance>100||Math.abs(p.distance*10000-Math.round(p.distance*10000))>1e-6)errors.distance='距離請填 0.1–100 km，最多四位小數。';
+ if(!Number.isInteger(p.hours)||p.hours<0||p.hours>12||!Number.isInteger(p.minutes)||p.minutes<0||p.minutes>59)errors.target='小時請填 0–12 的整數；分鐘請填 0–59 的整數。';
+ else if(p.hours*3600+p.minutes*60<=0)errors.target='目標時間需大於 0。';
+ if(!Number.isFinite(p.earlyKm)||!Number.isFinite(p.fadeKm))errors.segments='請填好前段終點與後段起點，不能留白。';
+ else if(p.earlyKm<=0||p.earlyKm>=p.fadeKm||p.fadeKm>=p.distance)errors.segments='需符合 0 < 前段終點 < 後段起點 < 全程距離，三段都要有長度。';
+ for(const group of paceGroups){const m=p[group+'Min'],s=p[group+'Sec'],total=m*60+s;
+  if(!Number.isSafeInteger(m)||m<0||!Number.isInteger(s)||s<0||s>59||!Number.isSafeInteger(total)||total<=0||total>Number.MAX_SAFE_INTEGER/100)errors[group+'Pace']='分鐘需為非負整數、秒數為 0–59 整數，配速合計必須大於 0，且不可超出可計算範圍。';
+ }
+ if(typeof p.note!=='string'||p.note.length>120)errors.note='跑前筆記最多 120 字。';
+ return errors;
+}
+function calculate(p){
+ const target=p.hours*3600+p.minutes*60,base=target/p.distance;
+ const early=p.earlyMin*60+p.earlySec,middle=p.middleMin*60+p.middleSec,late=p.lateMin*60+p.lateSec;
+ const segments=[{name:'前段',start:0,end:p.earlyKm,pace:early},{name:'中段',start:p.earlyKm,end:p.fadeKm,pace:middle},{name:'後段',start:p.fadeKm,end:p.distance,pace:late}];
+ for(const s of segments){s.distance=s.end-s.start;s.time=s.distance*s.pace;}
+ const total=segments.reduce((sum,s)=>sum+s.time,0);
+ return {target,base,early,middle,late,segments,total,difference:total-target};
+}
+function intervalTime(start,end,c){return c.segments.reduce((sum,s)=>sum+Math.max(0,Math.min(end,s.end)-Math.max(start,s.start))*s.pace,0);}
+function elapsed(km,p,c){return intervalTime(0,km,c);}
+function scaleBoundaries(oldDistance,newDistance,earlyKm,fadeKm){return {earlyKm:Number((earlyKm/oldDistance*newDistance).toFixed(10)),fadeKm:Number((fadeKm/oldDistance*newDistance).toFixed(10))};}
+function paceText(sec){const s=Math.round(sec);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function timeText(sec){const s=Math.round(Math.abs(sec));return Math.floor(s/3600)+':'+String(Math.floor(s/60)%60).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function diffText(sec){const n=Math.round(sec),s=Math.abs(n);return (n>0?'+':n<0?'−':'±')+Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function kmText(k){return String(Number(k.toFixed(10)));}
+function checkpoints(p){const points=[p.earlyKm,p.fadeKm,p.distance];for(let k=5;k<p.distance;k+=5)points.push(k);return points.sort((a,b)=>a-b).filter((k,i,all)=>i===0||Math.abs(k-all[i-1])>1e-9);}
+function readPlan(){const p={};for(const id of numericFields){const value=$(id).value.trim();p[id]=value===''?NaN:Number(value);}p.note=$('note').value;return p;}
+function applyPlan(p){for(const id of numericFields)$(id).value=p[id];$('note').value=p.note;lastValidDistance=p.distance;syncDistancePreset(p.distance);}
+function syncDistancePreset(distance){$('distancePreset').value=[5,10,21.0975,42.195].includes(distance)?String(distance):'custom';}
+function adjustDistance(){
+ const distance=readPlan().distance;
+ syncDistancePreset(distance);
+ if(validate({...DEFAULT,distance}).distance)return;
+ const a=Number($('earlyKm').value),b=Number($('fadeKm').value);
+ if($('earlyKm').value.trim()!==''&&$('fadeKm').value.trim()!==''&&Number.isFinite(a)&&Number.isFinite(b)){
+  const scaled=scaleBoundaries(lastValidDistance,distance,a,b);$('earlyKm').value=scaled.earlyKm;$('fadeKm').value=scaled.fadeKm;
+ }
+ lastValidDistance=distance;
+}
+function showErrors(errors){
+ const groups={distance:['distance'],target:['hours','minutes'],segments:['earlyKm','fadeKm'],earlyPace:['earlyMin','earlySec'],middlePace:['middleMin','middleSec'],latePace:['lateMin','lateSec'],note:['note']};
+ for(const [key,ids]of Object.entries(groups)){const message=errors[key]||'';$(key+'Error').textContent=message;for(const id of ids)$(id).setAttribute('aria-invalid',String(!!message));}
+ $('formError').textContent=Object.keys(errors).length?'請先修正上方標示的欄位。結果暫時隱藏，最後有效的已存計畫仍保留。':'';
+}
+function addRow(parent,values,lastClass){const tr=document.createElement('tr');for(const [index,value]of values.entries()){const td=document.createElement('td');td.textContent=value;if(index===values.length-1&&lastClass)td.className=lastClass;tr.append(td);}parent.append(tr);}
+function drawChart(p,c){
+ const width=680,height=235,left=60,right=19,top=20,bottom=37;
+ const low=Math.min(c.base,c.early,c.middle,c.late),high=Math.max(c.base,c.early,c.middle,c.late),pad=Math.max(20,(high-low)*.25),ymin=Math.max(0,low-pad),ymax=high+pad;
+ const x=k=>left+k/p.distance*(width-left-right),y=v=>top+(ymax-v)/(ymax-ymin)*(height-top-bottom);
+ let html='<title id="chartTitle">目標與三段計畫配速比較</title><desc id="chartDesc">前段 '+paceText(c.early)+'、中段 '+paceText(c.middle)+'、後段 '+paceText(c.late)+' 每公里。縱軸越高代表越慢。三段表提供完整數值。</desc>';
+ for(let i=0;i<=3;i++){const value=ymin+(ymax-ymin)*i/3,yy=y(value);html+=`<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" stroke="#e5ebe6"/><text x="${left-10}" y="${yy+4}" text-anchor="end" class="axis-label">${paceText(value)}</text>`;}
+ const ticks=[0,p.distance*.25,p.distance*.5,p.distance*.75,p.distance];
+ for(const k of ticks)html+=`<text x="${x(k)}" y="${height-13}" text-anchor="${k===p.distance?'end':'middle'}" class="axis-label">${Number(k.toFixed(2))}${k===p.distance?' km':''}</text>`;
+ html+=`<line x1="${left}" y1="${y(c.base)}" x2="${x(p.distance)}" y2="${y(c.base)}" stroke="#8b9691" stroke-width="2" stroke-dasharray="5 5"/>`;
+ const points=[];for(const s of c.segments)points.push(`${x(s.start)},${y(s.pace)}`,`${x(s.end)},${y(s.pace)}`);
+ html+=`<polyline points="${points.join(' ')}" fill="none" stroke="#176b55" stroke-width="3" stroke-linejoin="round"/><circle cx="${x(p.distance)}" cy="${y(c.late)}" r="4" fill="#176b55"/>`;
+ $('paceChart').innerHTML=html;
+}
+function renderPlan(p){
+ const c=calculate(p),difference=Math.round(c.difference);
+ $('distanceName').textContent={5:'5 公里路跑',10:'10 公里路跑',21.0975:'半程馬拉松',42.195:'全程馬拉松'}[p.distance]||'自訂距離';$('distanceMark').textContent=kmText(p.distance);
+ $('basePace').textContent=paceText(c.base);$('finishTime').textContent=timeText(c.total);$('averagePace').textContent='計畫平均 '+paceText(c.total/p.distance)+' /km';$('timeDiff').textContent=diffText(c.difference);
+ $('diffLabel').textContent=difference>0?'比目標時間慢':difference<0?'比目標時間提早':'與目標差不到半秒';$('timeDiff').style.color=difference>0?'var(--orange)':'var(--teal)';
+ $('resultSentence').textContent=`依三段安排，計畫 ${timeText(c.total)}；目標 ${timeText(c.target)}，${difference>0?'慢於目標':difference<0?'快於目標':'取整後差距為'} ${diffText(Math.abs(c.difference)).slice(1)}。`;
+ $('resultSentence').classList.toggle('late',difference>0);
+ $('precisionNote').textContent=`目標平均配速約 ${c.base.toFixed(3)} 秒/km；你的三段配速按輸入整秒計算，系統不會暗中補入小數秒。`;
+ const rangeIds=['earlyRange','middleRange','lateRange'];
+ $('segmentRows').replaceChildren();c.segments.forEach((s,index)=>{const range=`${kmText(s.start)}–${kmText(s.end)} km`;$ (rangeIds[index]).textContent=range;addRow($('segmentRows'),[s.name+' '+range,kmText(s.distance),paceText(s.pace),timeText(s.time)]);});
+ $('segmentHint').textContent=`目前比例：前 ${(p.earlyKm/p.distance*100).toFixed(1)}%／中 ${((p.fadeKm-p.earlyKm)/p.distance*100).toFixed(1)}%／後 ${((p.distance-p.fadeKm)/p.distance*100).toFixed(1)}%。切換距離時保留此比例。`;
+ $('splitRows').replaceChildren();for(const k of checkpoints(p)){const planned=intervalTime(0,k,c),target=k*c.base;let label=kmText(k)+' km';if(k===p.distance)label='終點 '+label;else if(Math.abs(k-p.earlyKm)<1e-9)label='前段終點 '+label;else if(Math.abs(k-p.fadeKm)<1e-9)label='後段起點 '+label;addRow($('splitRows'),[label,timeText(target),timeText(planned),diffText(planned-target)],Math.round(planned-target)>0?'plus':'minus');}
+ drawChart(p,c);
+}
+function savePlan(p){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:2,plan:p}));storageIsAvailable=true;$('saveStatus').textContent='已自動儲存最新有效設定與筆記。重新整理可恢復。';}catch{storageIsAvailable=false;$('saveStatus').textContent='未成功保存：瀏覽器限制存取或儲存空間不足。目前計算仍可用，請自行保留設定。';}}
+function update(persist=true){const p=readPlan(),errors=validate(p);showErrors(errors);$('results').hidden=Object.keys(errors).length>0;if(Object.keys(errors).length){$('saveStatus').textContent='目前輸入無效，未更新儲存；上次有效計畫仍保留。';return;}renderPlan(p);if(persist)savePlan(p);}
+function restore(){
+ let p={...DEFAULT},message='半馬 2 小時示範已載入。修改有效設定後會自動儲存。';
+ try{const raw=localStorage.getItem(STORAGE_KEY);if(raw){const saved=JSON.parse(raw);if(saved.version!==2||!saved.plan||Object.keys(validate(saved.plan)).length)throw Error('invalid');p=saved.plan;message='已恢復此瀏覽器最後一份有效計畫與筆記。';}}
+ catch{storageIsAvailable=false;message='未能讀取已存計畫，已載入示範。修改前未覆蓋既有儲存資料。';}
+ applyPlan(p);update(false);$('saveStatus').textContent=message;
+}
+$('planForm').addEventListener('submit',event=>event.preventDefault());
+$('planForm').addEventListener('input',event=>{if(event.target.id==='distancePreset')return;if(event.target.id==='distance')adjustDistance();update();});
+$('distancePreset').addEventListener('change',()=>{if($('distancePreset').value==='custom'){$('distance').focus();return;}$('distance').value=$('distancePreset').value;adjustDistance();update();});
+$('note').addEventListener('input',()=>update());
+$('reset').addEventListener('click',()=>{applyPlan({...DEFAULT});update();if(storageIsAvailable)$('saveStatus').textContent='已恢復並自動儲存半馬示範；此動作不刪除 TCX 資料。';});
+restore();
+
+</script>
+</body>
+</html>
